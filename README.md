@@ -18,6 +18,8 @@ The platform helps software engineers prepare for technical interviews using:
 The following features have been successfully completed:
 - **Phase 1.1**: Fully responsive, production-ready landing page featuring a React Three Fiber 3D Hero scene and an interactive Bento Grid with premium glassmorphism illustrations.
 - **Phase 1.2**: Secure, full-stack authentication system using Node.js, Express, MongoDB, and HTTP-Only JWT cookies. Includes Login, Register, Forgot Password, and Reset Password flows with React Router protection.
+- **Phase 1.3**: Authenticated Dashboard with dynamic Sidebar, Top Navigation, and a comprehensive Profile & Settings management system.
+- **Phase 2.1**: Resume Intelligence Module allowing secure drag-and-drop PDF ingestion, in-memory processing, and full text extraction stored directly to MongoDB.
 
 ## Tech Stack
 
@@ -72,7 +74,8 @@ The frontend will automatically proxy `/api` requests to the local backend on po
 ✅ **Phase 1.1 — Landing Page**
 ✅ **Phase 1.2 — Authentication**
 ✅ **Phase 1.3 — Dashboard**
-⬜ **Phase 2 — AI Interview Engine**
+✅ **Phase 2.1 — Resume Intelligence**
+⬜ **Phase 2.2 — AI Interview Engine**
 ⬜ **Phase 3 — Coding Interview**
 ⬜ **Phase 4 — Production Deployment**
 
