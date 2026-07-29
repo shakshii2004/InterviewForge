@@ -20,6 +20,7 @@ The following features have been successfully completed:
 - **Phase 1.2**: Secure, full-stack authentication system using Node.js, Express, MongoDB, and HTTP-Only JWT cookies. Includes Login, Register, Forgot Password, and Reset Password flows with React Router protection.
 - **Phase 1.3**: Authenticated Dashboard with dynamic Sidebar, Top Navigation, and a comprehensive Profile & Settings management system.
 - **Phase 2.1**: Resume Intelligence Module allowing secure drag-and-drop PDF ingestion, in-memory processing, and full text extraction stored directly to MongoDB.
+- **Phase 2.2**: Interview Setup Wizard featuring a responsive Framer Motion multi-step form to configure interview parameters, detect uploaded resumes, and provision backend Interview Sessions.
 
 ## Tech Stack
 
@@ -75,7 +76,8 @@ The frontend will automatically proxy `/api` requests to the local backend on po
 ✅ **Phase 1.2 — Authentication**
 ✅ **Phase 1.3 — Dashboard**
 ✅ **Phase 2.1 — Resume Intelligence**
-⬜ **Phase 2.2 — AI Interview Engine**
+✅ **Phase 2.2 — AI Interview Engine (Wizard)**
+⬜ **Phase 2.3 — AI Interview Engine (Core)**
 ⬜ **Phase 3 — Coding Interview**
 ⬜ **Phase 4 — Production Deployment**
 

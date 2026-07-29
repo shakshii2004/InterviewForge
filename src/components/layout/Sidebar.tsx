@@ -6,7 +6,7 @@ export const Sidebar = () => {
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, soon: false },
     { name: 'Resume', path: '/dashboard/resume', icon: FileText, soon: false },
-    { name: 'Mock Interviews', path: '/dashboard/interviews', icon: Video, soon: true },
+    { name: 'Mock Interviews', path: '/dashboard/interviews', icon: Video, soon: false },
     { name: 'Profile', path: '/dashboard/profile', icon: User },
     { name: 'Settings', path: '/dashboard/settings', icon: SettingsIcon },
   ];

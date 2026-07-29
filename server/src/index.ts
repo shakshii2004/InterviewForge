@@ -6,6 +6,7 @@ import { connectDB } from './config/db';
 import authRoutes from './routes/authRoutes';
 import profileRoutes from './routes/profileRoutes';
 import resumeRoutes from './routes/resumeRoutes';
+import interviewRoutes from './routes/interviewRoutes';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/resume', resumeRoutes);
+app.use('/api/interviews', interviewRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
