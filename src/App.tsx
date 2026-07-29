@@ -1,28 +1,38 @@
-import { Navbar } from './components/layout/Navbar';
-import { Hero } from './components/hero/Hero';
-import { TrustedBy } from './components/sections/TrustedBy';
-import { ProductStory } from './components/sections/ProductStory';
-import { Features } from './components/sections/Features';
-import { WhyInterviewForge } from './components/sections/WhyInterviewForge';
-import { FAQ } from './components/sections/FAQ';
-import { CTA } from './components/sections/CTA';
-import { Footer } from './components/layout/Footer';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from './context/AuthContext';
+import { LandingPage } from './pages/LandingPage';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
+import { ForgotPassword } from './pages/ForgotPassword';
+import { ResetPassword } from './pages/ResetPassword';
+import { Dashboard } from './pages/Dashboard';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col font-sans selection:bg-accent/30 selection:text-primary">
-      <Navbar />
-      <main className="flex-grow">
-        <Hero />
-        <TrustedBy />
-        <ProductStory />
-        <Features />
-        <WhyInterviewForge />
-        <FAQ />
-        <CTA />
-      </main>
-      <Footer />
-    </div>
+    <AuthProvider>
+      <Router>
+        <Toaster position="top-center" toastOptions={{
+          style: {
+            background: '#1e293b',
+            color: '#fff',
+            border: '1px solid rgba(255,255,255,0.1)',
+          }
+        }} />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

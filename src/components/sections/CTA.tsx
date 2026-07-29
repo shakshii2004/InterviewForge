@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Button } from '../ui/Button';
 
 export const CTA = () => {
@@ -23,9 +24,11 @@ export const CTA = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="w-full sm:w-auto px-10 shadow-xl shadow-primary/10">
-              Start Free Trial
-            </Button>
+            <Link to="/register">
+              <Button size="lg" className="w-full sm:w-auto px-10 shadow-xl shadow-primary/10">
+                Start Free Trial
+              </Button>
+            </Link>
             <Button size="lg" variant="secondary" className="w-full sm:w-auto px-10">
               View Pricing
             </Button>

@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Button } from '../ui/Button';
 import { Canvas } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
@@ -39,7 +40,9 @@ export const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Button size="lg" className="px-8 shadow-xl shadow-primary/10">Start Free</Button>
+            <Link to="/register">
+              <Button size="lg" className="px-8 shadow-xl shadow-primary/10">Start Free</Button>
+            </Link>
             <Button size="lg" variant="secondary" className="px-8 bg-white/50 backdrop-blur-sm">Watch Demo</Button>
           </motion.div>
         </div>

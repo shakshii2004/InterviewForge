@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from '../../utils/cn';
 import { Button } from '../ui/Button';
+import { useAuth } from '../../context/AuthContext';
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,12 +24,12 @@ export const Navbar = () => {
       )}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
             <span className="text-white font-bold text-lg leading-none">I</span>
           </div>
           <span className="font-bold text-xl tracking-tight text-primary">InterviewForge</span>
-        </div>
+        </Link>
         
         <nav className="hidden md:flex items-center gap-8">
           <a href="#features" className="text-sm font-medium text-text-secondary hover:text-primary transition-colors">Features</a>
@@ -35,8 +38,23 @@ export const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-4">
-          <Button variant="ghost" className="hidden sm:inline-flex">Login</Button>
-          <Button>Get Started</Button>
+          {isAuthenticated ? (
+            <>
+              <Link to="/dashboard">
+                <Button variant="ghost" className="hidden sm:inline-flex">Dashboard</Button>
+              </Link>
+              <Button onClick={() => logout()}>Logout</Button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <Button variant="ghost" className="hidden sm:inline-flex">Login</Button>
+              </Link>
+              <Link to="/register">
+                <Button>Get Started</Button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
