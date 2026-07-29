@@ -71,7 +71,7 @@ The frontend will automatically proxy `/api` requests to the local backend on po
 
 ✅ **Phase 1.1 — Landing Page**
 ✅ **Phase 1.2 — Authentication**
-⬜ **Phase 1.3 — Dashboard**
+✅ **Phase 1.3 — Dashboard**
 ⬜ **Phase 2 — AI Interview Engine**
 ⬜ **Phase 3 — Coding Interview**
 ⬜ **Phase 4 — Production Deployment**
