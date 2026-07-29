@@ -15,66 +15,62 @@ The platform helps software engineers prepare for technical interviews using:
 
 ## Features
 
-The following features have been successfully completed in **Phase 1.1**:
-- Fully responsive, production-ready landing page.
-- Highly interactive React Three Fiber 3D Hero scene featuring an animated laptop and floating UI elements.
-- Custom-built Bento Grid features section with 5 unique, animated 3D glassmorphism illustrations.
-- Interactive scroll-linked timeline demonstrating the product story.
-- Advanced Framer Motion scroll animations and hover micro-interactions throughout.
+The following features have been successfully completed:
+- **Phase 1.1**: Fully responsive, production-ready landing page featuring a React Three Fiber 3D Hero scene and an interactive Bento Grid with premium glassmorphism illustrations.
+- **Phase 1.2**: Secure, full-stack authentication system using Node.js, Express, MongoDB, and HTTP-Only JWT cookies. Includes Login, Register, Forgot Password, and Reset Password flows with React Router protection.
 
 ## Tech Stack
 
 **Frontend:**
-- [React](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
+- [React](https://react.dev/) & [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vitejs.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Framer Motion](https://www.framer.com/motion/)
 - [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)
-- [Drei](https://github.com/pmndrs/drei)
 
-## Project Structure
-
-```
-interviewforge/
-├── public/                 # Static assets
-├── src/
-│   ├── assets/             # Images and local media
-│   ├── components/         # React components
-│   │   ├── hero/           # Hero section and related UI
-│   │   ├── layout/         # Navbar, Footer, and global layout wrappers
-│   │   ├── sections/       # Landing page sections (Features, FAQ, ProductStory, etc.)
-│   │   ├── three/          # React Three Fiber custom 3D scenes and models
-│   │   └── ui/             # Reusable UI elements (Buttons, Accordions, etc.)
-│   ├── utils/              # Helper functions (e.g., tailwind-merge utilities)
-│   ├── App.tsx             # Main application orchestrator
-│   ├── index.css           # Global styles and Tailwind directives
-│   └── main.tsx            # React application entry point
-├── tailwind.config.js      # Tailwind CSS configuration
-├── tsconfig.json           # TypeScript configuration
-└── vite.config.ts          # Vite configuration
-```
+**Backend:**
+- [Node.js](https://nodejs.org/) & [Express](https://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/) & [Mongoose](https://mongoosejs.com/)
+- JWT Authentication & `bcryptjs`
 
 ## Installation
 
-To run this project locally, execute the following commands:
+To run this project locally, you will need to start both the frontend and backend servers.
 
+### 1. Database Setup
+Ensure you have MongoDB running locally on `mongodb://localhost:27017/interviewforge`.
+
+### 2. Backend Setup
+Open a terminal and navigate to the server folder:
 ```bash
-# Install dependencies
+cd server
 npm install
 
-# Start the development server
+# Create a .env file
+echo "PORT=5000" > .env
+echo "MONGO_URI=mongodb://localhost:27017/interviewforge" >> .env
+echo "JWT_SECRET=your_super_secret_key" >> .env
+echo "NODE_ENV=development" >> .env
+
+# Start the Express server
 npm run dev
 ```
 
-## Screenshots
+### 3. Frontend Setup
+Open a second terminal and navigate to the project root:
+```bash
+npm install
 
-*(Screenshots coming soon)*
+# Start the Vite development server
+npm run dev
+```
+
+The frontend will automatically proxy `/api` requests to the local backend on port 5000.
 
 ## Roadmap
 
 ✅ **Phase 1.1 — Landing Page**
-⬜ **Phase 1.2 — Authentication**
+✅ **Phase 1.2 — Authentication**
 ⬜ **Phase 1.3 — Dashboard**
 ⬜ **Phase 2 — AI Interview Engine**
 ⬜ **Phase 3 — Coding Interview**
