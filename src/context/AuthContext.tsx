@@ -6,6 +6,17 @@ interface User {
   _id: string;
   name: string;
   email: string;
+  bio?: string;
+  skills?: string[];
+  targetRole?: string;
+  experienceLevel?: string;
+  github?: string;
+  linkedin?: string;
+  profileImage?: string;
+  preferences?: {
+    theme: string;
+    emailNotifications: boolean;
+  };
 }
 
 interface AuthContextType {

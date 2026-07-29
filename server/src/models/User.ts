@@ -22,6 +22,47 @@ const userSchema = new mongoose.Schema(
       minlength: 6,
       select: false, // Do not return password by default
     },
+    bio: {
+      type: String,
+      default: '',
+      maxlength: 500,
+    },
+    skills: {
+      type: [String],
+      default: [],
+    },
+    targetRole: {
+      type: String,
+      default: '',
+    },
+    experienceLevel: {
+      type: String,
+      enum: ['Beginner', 'Intermediate', 'Advanced', 'Expert'],
+      default: 'Intermediate',
+    },
+    github: {
+      type: String,
+      default: '',
+    },
+    linkedin: {
+      type: String,
+      default: '',
+    },
+    profileImage: {
+      type: String,
+      default: '',
+    },
+    preferences: {
+      theme: {
+        type: String,
+        enum: ['light', 'dark', 'system'],
+        default: 'dark',
+      },
+      emailNotifications: {
+        type: Boolean,
+        default: true,
+      },
+    }
   },
   {
     timestamps: true,

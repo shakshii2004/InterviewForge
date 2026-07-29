@@ -7,7 +7,10 @@ import { Register } from './pages/Register';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
 import { Dashboard } from './pages/Dashboard';
+import { Profile } from './pages/Profile';
+import { Settings } from './pages/Settings';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { DashboardLayout } from './components/layout/DashboardLayout';
 
 function App() {
   return (
@@ -28,7 +31,11 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           
           <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route element={<DashboardLayout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/profile" element={<Profile />} />
+              <Route path="/dashboard/settings" element={<Settings />} />
+            </Route>
           </Route>
         </Routes>
       </Router>
