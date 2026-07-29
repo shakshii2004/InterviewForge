@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import { connectDB } from './config/db';
 import authRoutes from './routes/authRoutes';
 import profileRoutes from './routes/profileRoutes';
+import resumeRoutes from './routes/resumeRoutes';
 
 dotenv.config();
 
@@ -15,8 +16,8 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ? 'https://yourdomain.com' : 'http://localhost:5173',
-  credentials: true, // Allow cookies
+  origin: 'http://localhost:5173', // Vite dev server default
+  credentials: true
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,6 +26,7 @@ app.use(cookieParser());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/resume', resumeRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {

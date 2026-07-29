@@ -1,13 +1,14 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Video, UserCircle, Settings } from 'lucide-react';
+import { LayoutDashboard, Video, User, Settings as SettingsIcon, FileText } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 export const Sidebar = () => {
   const navItems = [
-    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, soon: false },
+    { name: 'Resume', path: '/dashboard/resume', icon: FileText, soon: false },
     { name: 'Mock Interviews', path: '/dashboard/interviews', icon: Video, soon: true },
-    { name: 'Profile', path: '/dashboard/profile', icon: UserCircle },
-    { name: 'Settings', path: '/dashboard/settings', icon: Settings },
+    { name: 'Profile', path: '/dashboard/profile', icon: User },
+    { name: 'Settings', path: '/dashboard/settings', icon: SettingsIcon },
   ];
 
   return (
