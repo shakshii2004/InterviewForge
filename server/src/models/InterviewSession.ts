@@ -9,6 +9,9 @@ export interface IInterviewSession extends Document {
   duration: number; // in minutes
   resumeId?: mongoose.Types.ObjectId;
   status: 'pending' | 'in-progress' | 'completed';
+  currentQuestionIndex: number;
+  totalQuestions: number;
+  score?: number;
   startedAt?: Date;
   completedAt?: Date;
   createdAt: Date;
@@ -48,6 +51,17 @@ const interviewSessionSchema = new Schema<IInterviewSession>({
     type: String,
     enum: ['pending', 'in-progress', 'completed'],
     default: 'pending'
+  },
+  currentQuestionIndex: {
+    type: Number,
+    default: 0
+  },
+  totalQuestions: {
+    type: Number,
+    default: 5
+  },
+  score: {
+    type: Number
   },
   startedAt: {
     type: Date

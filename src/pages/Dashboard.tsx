@@ -1,37 +1,65 @@
+import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
-import { Target, Trophy, Clock, Play, Edit3, ArrowRight, Video, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Target, Trophy, Clock, Play, Edit3, ArrowRight, Video, Sparkles, FileText, Activity } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '../utils/cn';
-
-const stats = [
-  { label: 'Interviews Completed', value: '0', icon: Video, color: 'text-primary', bg: 'bg-primary/10' },
-  { label: 'Average Score', value: '-', icon: Trophy, color: 'text-yellow-600', bg: 'bg-yellow-100' },
-  { label: 'Practice Time', value: '0h', icon: Clock, color: 'text-emerald-600', bg: 'bg-emerald-100' },
-  { label: 'Target Role', value: 'Not Set', icon: Target, color: 'text-blue-600', bg: 'bg-blue-100' },
-];
-
-const quickActions = [
-  {
-    title: 'Start AI Interview',
-    description: 'Jump right into a new mock interview session.',
-    icon: Play,
-    link: '#',
-    soon: true,
-    primary: true,
-  },
-  {
-    title: 'Update Profile',
-    description: 'Keep your target role and skills up to date.',
-    icon: Edit3,
-    link: '/dashboard/profile',
-    soon: false,
-    primary: false,
-  },
-];
+import { api } from '../lib/api';
+import toast from 'react-hot-toast';
 
 export const Dashboard = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const [interviews, setInterviews] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInterviews = async () => {
+      try {
+        const res = await api.get('/interviews');
+        if (res.data.success) {
+          setInterviews(res.data.interviews);
+        }
+      } catch (err) {
+        toast.error('Failed to load interview history');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInterviews();
+  }, []);
+
+  const completed = interviews.filter(i => i.status === 'completed');
+  const avgScore = completed.length 
+    ? Math.round(completed.reduce((acc, curr) => acc + (curr.score || 0), 0) / completed.length) 
+    : 0;
+  const totalDuration = completed.reduce((acc, curr) => acc + (curr.duration || 0), 0);
+
+  const stats = [
+    { label: 'Interviews Completed', value: completed.length.toString(), icon: Video, color: 'text-primary', bg: 'bg-primary/10' },
+    { label: 'Average Score', value: completed.length ? `${avgScore}/100` : '-', icon: Trophy, color: 'text-yellow-600', bg: 'bg-yellow-100' },
+    { label: 'Practice Time', value: `${totalDuration}m`, icon: Clock, color: 'text-emerald-600', bg: 'bg-emerald-100' },
+    { label: 'Target Role', value: user?.targetRole || 'Not Set', icon: Target, color: 'text-blue-600', bg: 'bg-blue-100' },
+  ];
+
+  const quickActions = [
+    {
+      title: 'Start AI Interview',
+      description: 'Jump right into a new mock interview session.',
+      icon: Play,
+      link: '/dashboard/interviews',
+      soon: false,
+      primary: true,
+    },
+    {
+      title: 'Update Profile',
+      description: 'Keep your target role and skills up to date.',
+      icon: Edit3,
+      link: '/dashboard/profile',
+      soon: false,
+      primary: false,
+    },
+  ];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-20">
@@ -71,22 +99,16 @@ export const Dashboard = () => {
       </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column (Actions & Empty States) */}
+        {/* Left Column (Actions) */}
         <div className="lg:col-span-2 space-y-8">
           
-          {/* Quick Actions */}
           <section>
             <h2 className="text-xl font-bold text-primary mb-4">Quick Actions</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {quickActions.map((action, idx) => {
                 const ActionTag = action.soon ? 'div' : Link;
                 return (
-                  <motion.div
-                    key={action.title}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.2 + idx * 0.1 }}
-                  >
+                  <motion.div key={action.title} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 + idx * 0.1 }}>
                     <ActionTag
                       to={action.link}
                       className={cn(
@@ -101,27 +123,16 @@ export const Dashboard = () => {
                       )}
                       
                       <div className="flex items-start justify-between relative z-10">
-                        <div className={cn(
-                          "w-10 h-10 rounded-lg flex items-center justify-center mb-4",
-                          action.primary ? "bg-primary text-white shadow-md" : "bg-gray-100 text-primary border border-border"
-                        )}>
+                        <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center mb-4", action.primary ? "bg-primary text-white shadow-md" : "bg-gray-100 text-primary border border-border")}>
                           <action.icon className="w-5 h-5" />
                         </div>
-                        {action.soon && (
-                          <span className="text-xs font-bold uppercase tracking-wider bg-gray-200 text-text-secondary px-2 py-1 rounded-md flex items-center gap-1.5">
-                            <Sparkles className="w-3 h-3" /> Coming Soon
-                          </span>
-                        )}
                       </div>
                       
                       <h3 className="text-lg font-bold text-primary mb-2">{action.title}</h3>
                       <p className="text-sm text-text-secondary mb-4">{action.description}</p>
                       
                       {!action.soon && (
-                        <div className={cn(
-                          "flex items-center gap-2 text-sm font-bold transition-colors",
-                          action.primary ? "text-primary" : "text-text-secondary group-hover:text-primary"
-                        )}>
+                        <div className={cn("flex items-center gap-2 text-sm font-bold transition-colors", action.primary ? "text-primary" : "text-text-secondary group-hover:text-primary")}>
                           Get Started <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </div>
                       )}
@@ -133,37 +144,63 @@ export const Dashboard = () => {
           </section>
 
           {/* AI Feedback Teaser */}
-          <section>
-            <div className="bg-gradient-to-br from-primary to-[#4a2450] border border-primary/20 rounded-2xl p-8 relative overflow-hidden shadow-lg">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 blur-[80px] rounded-full pointer-events-none" />
-              <div className="relative z-10 max-w-md">
-                <Sparkles className="w-8 h-8 text-accent mb-4" />
-                <h2 className="text-2xl font-bold text-white mb-2">AI-Powered Insights</h2>
-                <p className="text-white/80 mb-6">
-                  Complete your first mock interview to unlock personalized feedback, pacing analysis, and a custom learning roadmap.
-                </p>
-                <button className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-lg font-bold transition-colors cursor-not-allowed opacity-50">
-                  Analyze Performance (Locked)
-                </button>
+          {completed.length === 0 && (
+            <section>
+              <div className="bg-gradient-to-br from-primary to-[#4a2450] border border-primary/20 rounded-2xl p-8 relative overflow-hidden shadow-lg">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 blur-[80px] rounded-full pointer-events-none" />
+                <div className="relative z-10 max-w-md">
+                  <Sparkles className="w-8 h-8 text-accent mb-4" />
+                  <h2 className="text-2xl font-bold text-white mb-2">AI-Powered Insights</h2>
+                  <p className="text-white/80 mb-6">
+                    Complete your first mock interview to unlock personalized feedback, pacing analysis, and a custom learning roadmap.
+                  </p>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          )}
         </div>
 
         {/* Right Column (Recent Activity) */}
         <div className="lg:col-span-1">
           <section className="bg-white border border-border rounded-2xl p-6 h-full shadow-sm">
-            <h2 className="text-lg font-bold text-primary mb-6">Recent Activity</h2>
+            <h2 className="text-lg font-bold text-primary mb-6">Interview History</h2>
             
-            <div className="flex flex-col items-center justify-center text-center py-12 px-4 h-[300px]">
-              <div className="w-16 h-16 rounded-full bg-gray-50 border border-border flex items-center justify-center mb-4">
-                <Target className="w-8 h-8 text-gray-300" />
+            {loading ? (
+              <div className="flex items-center justify-center py-12"><Activity className="w-8 h-8 text-indigo-400 animate-spin" /></div>
+            ) : interviews.length === 0 ? (
+              <div className="flex flex-col items-center justify-center text-center py-12 px-4 h-[300px]">
+                <div className="w-16 h-16 rounded-full bg-gray-50 border border-border flex items-center justify-center mb-4">
+                  <Target className="w-8 h-8 text-gray-300" />
+                </div>
+                <h3 className="text-primary font-bold mb-2">No activity yet</h3>
+                <p className="text-sm text-text-secondary max-w-[200px]">Your recent interviews will appear here.</p>
               </div>
-              <h3 className="text-primary font-bold mb-2">No activity yet</h3>
-              <p className="text-sm text-text-secondary max-w-[200px]">
-                Your recent interviews and achievements will appear here.
-              </p>
-            </div>
+            ) : (
+              <div className="space-y-4">
+                {interviews.map((session, i) => (
+                  <motion.div key={session._id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }} className="p-4 rounded-xl border border-border hover:border-indigo-300 transition-colors bg-gray-50 hover:bg-white group">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h4 className="font-bold text-primary">{session.role}</h4>
+                        <p className="text-xs text-text-secondary">{new Date(session.createdAt).toLocaleDateString()}</p>
+                      </div>
+                      <span className={cn("px-2 py-1 text-xs font-bold rounded-md", session.status === 'completed' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700')}>
+                        {session.status}
+                      </span>
+                    </div>
+                    {session.status === 'completed' ? (
+                      <button onClick={() => navigate(`/evaluation/${session._id}`)} className="mt-3 w-full py-2 bg-indigo-50 text-indigo-600 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                        <FileText className="w-4 h-4" /> View Report
+                      </button>
+                    ) : (
+                      <button onClick={() => navigate(`/interview/${session._id}`)} className="mt-3 w-full py-2 bg-amber-50 text-amber-600 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:bg-amber-100 transition-colors">
+                        <Play className="w-4 h-4" /> Resume Interview
+                      </button>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </section>
         </div>
       </div>

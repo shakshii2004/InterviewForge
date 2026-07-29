@@ -12,6 +12,12 @@ import { Settings } from './pages/Settings';
 import { Resume } from './pages/Resume';
 import { InterviewWizard } from './pages/interviews/InterviewWizard';
 import { InterviewSession } from './pages/interviews/InterviewSession';
+import { Evaluation } from './pages/interviews/Evaluation';
+import { ReportsLayout } from './components/layout/ReportsLayout';
+import { ReportsOverview } from './pages/reports/ReportsOverview';
+import { InterviewHistory } from './pages/reports/InterviewHistory';
+import { SkillAnalytics } from './pages/reports/SkillAnalytics';
+import { ProgressMilestones } from './pages/reports/ProgressMilestones';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { DashboardLayout } from './components/layout/DashboardLayout';
 
@@ -40,9 +46,18 @@ function App() {
               <Route path="/dashboard/interviews" element={<InterviewWizard />} />
               <Route path="/dashboard/profile" element={<Profile />} />
               <Route path="/dashboard/settings" element={<Settings />} />
+              
+              {/* Reports & Analytics Nested Routes */}
+              <Route path="/reports" element={<ReportsLayout />}>
+                <Route index element={<ReportsOverview />} />
+                <Route path="interviews" element={<InterviewHistory />} />
+                <Route path="skills" element={<SkillAnalytics />} />
+                <Route path="progress" element={<ProgressMilestones />} />
+              </Route>
             </Route>
             {/* The actual interview is outside the dashboard layout (full screen) */}
             <Route path="/interview/:sessionId" element={<InterviewSession />} />
+            <Route path="/evaluation/:sessionId" element={<Evaluation />} />
           </Route>
         </Routes>
       </Router>

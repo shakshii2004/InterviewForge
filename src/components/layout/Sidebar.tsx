@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Video, User, Settings as SettingsIcon, FileText } from 'lucide-react';
+import { LayoutDashboard, Video, User, Settings as SettingsIcon, FileText, BarChart2 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 export const Sidebar = () => {
@@ -7,6 +7,7 @@ export const Sidebar = () => {
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, soon: false },
     { name: 'Resume', path: '/dashboard/resume', icon: FileText, soon: false },
     { name: 'Mock Interviews', path: '/dashboard/interviews', icon: Video, soon: false },
+    { name: 'Reports', path: '/reports', icon: BarChart2, soon: false },
     { name: 'Profile', path: '/dashboard/profile', icon: User },
     { name: 'Settings', path: '/dashboard/settings', icon: SettingsIcon },
   ];
