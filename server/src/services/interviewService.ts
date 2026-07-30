@@ -3,10 +3,10 @@ import { InterviewSession } from '../models/InterviewSession';
 import { Question } from '../models/Question';
 import { Answer } from '../models/Answer';
 import { Resume } from '../models/Resume';
-import { GeminiProvider } from './ai/geminiProvider';
-import { GenerationContext } from './ai/aiProvider';
-
-const aiProvider = new GeminiProvider();
+import { AIProviderFactory } from './ai/AIProviderFactory';
+import { GenerationContext } from './ai/providers/AIProvider';
+import { buildPrompt } from './ai/promptBuilder';
+import { parseAIResponse } from './ai/responseParser';
 
 export const interviewService = {
   async generateNextQuestion(interviewId: string, userId: string) {
@@ -38,7 +38,7 @@ export const interviewService = {
     }
 
     const previousQuestions = await Question.find({ interviewId }).sort({ order: 1 });
-    const previousAnswers = await Answer.find({ interviewId }).sort({ startedAt: 1 }); // Rough mapping, in reality we map by questionId
+    const previousAnswers = await Answer.find({ interviewId }).sort({ startedAt: 1 });
 
     const context: GenerationContext = {
       role: session.role,
@@ -51,7 +51,9 @@ export const interviewService = {
       questionNumber: currentOrder
     };
 
-    const generated = await aiProvider.generateQuestion(context);
+    const prompt = buildPrompt(context);
+    const rawResponse = await AIProviderFactory.generateInterviewQuestions(prompt);
+    const generated = parseAIResponse(rawResponse);
 
     const newQuestion = new Question({
       interviewId: session._id,

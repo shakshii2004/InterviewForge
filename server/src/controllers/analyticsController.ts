@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middleware/authMiddleware';
+import { AuthRequest } from '../middleware/auth';
 import { analyticsService } from '../services/analyticsService';
 
 export const getDashboardAnalytics = async (req: AuthRequest, res: Response): Promise<void> => {

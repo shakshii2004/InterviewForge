@@ -18,5 +18,10 @@ export interface GeneratedQuestion {
 }
 
 export interface AIProvider {
-  generateQuestion(context: GenerationContext): Promise<GeneratedQuestion>;
+  generateInterviewQuestions(prompt: string): Promise<string>;
+  generateFollowUpQuestion(prompt: string): Promise<string>;
+  evaluateInterview(prompt: string): Promise<string>;
+  analyzeResume(prompt: string): Promise<string>;
+  reviewCode(prompt: string): Promise<string>;
+  generateRecommendations(prompt: string): Promise<string>;
 }

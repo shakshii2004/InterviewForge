@@ -1,4 +1,4 @@
-import { GeneratedQuestion } from './aiProvider';
+import { GeneratedQuestion } from './providers/AIProvider';
 
 export const parseAIResponse = (text: string): GeneratedQuestion => {
   try {

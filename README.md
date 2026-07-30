@@ -25,6 +25,13 @@ The following features have been successfully completed:
 - **Phase 2.4**: AI Evaluation Engine. Generates comprehensive post-interview feedback and analytics (Radar charts, strengths, areas for improvement) using a dedicated Evaluation schema, with PDF export capabilities.
 - **Phase 2.5**: Reports & Analytics Module. Comprehensive user analytics tracking aggregate scores, practice streaks, and skill trajectories over time. Includes an interactive interview history table with CSV exporting, and dynamically updating Recharts components.
 
+## Architecture Updates
+
+- **AI Architecture Redesign**: Migrated from a single-provider dependency to a dynamic `AIProviderFactory` pattern.
+  - Supports **Groq**, **OpenRouter**, and **Gemini** providers seamlessly.
+  - Features automatic, real-time fallbacks if an API limit or timeout is reached (Groq -> OpenRouter -> Gemini).
+  - Configurable OpenRouter model support.
+
 ## Recent Hotfixes
 
 - Fixed an issue where the mock AI Engine would return duplicate questions during a single interview session.
@@ -62,6 +69,10 @@ echo "PORT=5000" > .env
 echo "MONGO_URI=mongodb://localhost:27017/interviewforge" >> .env
 echo "JWT_SECRET=your_super_secret_key" >> .env
 echo "NODE_ENV=development" >> .env
+echo "GROQ_API_KEY=your_groq_key" >> .env
+echo "OPENROUTER_API_KEY=your_openrouter_key" >> .env
+echo "OPENROUTER_MODEL=anthropic/claude-3.5-sonnet" >> .env
+echo "GEMINI_API_KEY=your_gemini_key" >> .env
 
 # Start the Express server
 npm run dev

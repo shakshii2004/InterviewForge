@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middleware/authMiddleware';
+import { AuthRequest } from '../middleware/auth';
 import { evaluationService } from '../services/evaluation/evaluationService';
 
 export const generateEvaluation = async (req: AuthRequest, res: Response): Promise<void> => {

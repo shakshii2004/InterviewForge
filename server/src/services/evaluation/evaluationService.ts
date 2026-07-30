@@ -6,6 +6,7 @@ import { Answer } from '../../models/Answer';
 import { Resume } from '../../models/Resume';
 import { buildEvaluationPrompt } from './evaluationPromptBuilder';
 import { parseEvaluationResponse } from './evaluationParser';
+import { AIProviderFactory } from '../ai/AIProviderFactory';
 
 export const evaluationService = {
   async generateEvaluation(interviewId: string, userId: string) {
@@ -32,47 +33,8 @@ export const evaluationService = {
     // 3. Build Prompt
     const prompt = buildEvaluationPrompt(session, questions, answers, resumeText);
 
-    // 4. Call AI (Using Gemma 4 due to API Quota issues on Gemini)
-    // IMPORTANT: Due to a 503 "High Demand" error on gemma-4 right now, we are falling back to a mock evaluation.
-    // In production, this would use the real AI call.
-    
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    const mockJson = {
-      overallScore: 88,
-      technicalScore: 85,
-      communicationScore: 92,
-      problemSolvingScore: 82,
-      confidenceScore: 90,
-      projectScore: 90,
-      timeManagementScore: 88,
-      summary: "The candidate demonstrated strong foundational knowledge and excellent communication skills. They were able to clearly articulate their thought process, though some technical specifics could be deepened. Overall, a very promising performance.",
-      strengths: [
-        "Clear and concise communication",
-        "Strong understanding of core concepts",
-        "Excellent problem-solving methodology"
-      ],
-      improvements: [
-        "Dive deeper into technical edge cases",
-        "Elaborate more on practical project examples",
-        "Review specific syntax for advanced features"
-      ],
-      recommendedTopics: [
-        "Advanced System Design",
-        "Performance Optimization",
-        "Edge Case Handling"
-      ],
-      questionFeedback: questions.map((q, index) => ({
-        questionId: index.toString(),
-        score: Math.floor(Math.random() * 3) + 7, // 7 to 9
-        strengths: ["Good initial approach", "Clear explanation"],
-        missingPoints: ["Missed edge cases"],
-        feedback: "Solid answer, but try to provide more concrete examples from your past experience."
-      }))
-    };
-    
-    let aiResponseText = JSON.stringify(mockJson);
+    // 4. Call AI through Factory
+    const aiResponseText = await AIProviderFactory.evaluateInterview(prompt);
 
     // 5. Parse Response
     const parsedData = parseEvaluationResponse(aiResponseText);

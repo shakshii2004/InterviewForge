@@ -1,4 +1,4 @@
-import { GenerationContext } from './aiProvider';
+import { GenerationContext } from './providers/AIProvider';
 
 export const buildPrompt = (context: GenerationContext): string => {
   const { role, experience, interviewType, difficulty, resumeText, previousQuestions, previousAnswers, questionNumber } = context;
