@@ -37,8 +37,12 @@ The following features have been successfully completed:
   - Features automatic, real-time fallbacks if an API limit or timeout is reached (Groq -> OpenRouter -> Gemini).
   - Configurable OpenRouter model support.
 
-## Recent Hotfixes
+## Recent Hotfixes & Deployment Hardening
 
+- **Authentication Transport Upgrade**: Migrated from cross-domain HTTP-Only cookies to a robust `Authorization: Bearer <token>` flow using Axios Interceptors and `localStorage` to bypass strict browser cross-site cookie blocking in production.
+- **CORS Preflight Resiliency**: Fixed an Express 5 `path-to-regexp` wildcard incompatibility that caused `OPTIONS` preflight requests to throw a 502 Bad Gateway error on Render.
+- **Firebase Admin Parsing**: Added robust string parsing (stripping quotes, formatting newlines) to the `FIREBASE_PRIVATE_KEY` parser to handle aggressive string escaping by cloud environment variable managers.
+- **Database Connection Safety**: Added explicit MongoDB Atlas connection error handling to prevent silent application boot failures when the Render dynamic IP is not whitelisted in the MongoDB Network Access panel.
 - Fixed an issue where the mock AI Engine would return duplicate questions during a single interview session.
 - Fixed a race condition (E11000 Duplicate Key Error) in the Evaluation Engine caused by React Strict Mode double-mounting during development.
 
