@@ -56,43 +56,67 @@ The following features have been successfully completed:
 - [MongoDB](https://www.mongodb.com/) & [Mongoose](https://mongoosejs.com/)
 - JWT Authentication & `bcryptjs`
 
-## Installation
+## Installation (Local Development)
 
-To run this project locally, you will need to start both the frontend and backend servers.
+To run this project locally:
 
 ### 1. Database Setup
 Ensure you have MongoDB running locally on `mongodb://localhost:27017/interviewforge`.
 
 ### 2. Backend Setup
-Open a terminal and navigate to the server folder:
 ```bash
 cd server
 npm install
-
-# Create a .env file
-echo "PORT=5000" > .env
-echo "MONGO_URI=mongodb://localhost:27017/interviewforge" >> .env
-echo "JWT_SECRET=your_super_secret_key" >> .env
-echo "NODE_ENV=development" >> .env
-echo "GROQ_API_KEY=your_groq_key" >> .env
-echo "OPENROUTER_API_KEY=your_openrouter_key" >> .env
-echo "OPENROUTER_MODEL=anthropic/claude-3.5-sonnet" >> .env
-echo "GEMINI_API_KEY=your_gemini_key" >> .env
-
-# Start the Express server
 npm run dev
 ```
 
 ### 3. Frontend Setup
-Open a second terminal and navigate to the project root:
 ```bash
 npm install
-
-# Start the Vite development server
 npm run dev
 ```
 
-The frontend will automatically proxy `/api` requests to the local backend on port 5000.
+## Production Deployment Guide
+
+InterviewForge is architected to be deployed with the Frontend on **Vercel** and the Backend on **Render**, utilizing **MongoDB Atlas** for the database and **Firebase** for authentication and live communication.
+
+### Required Environment Variables
+
+#### Backend (Render)
+- `NODE_ENV=production`
+- `PORT` (Automatically injected by Render)
+- `FRONTEND_URL` (URL of your Vercel deployment, e.g., `https://interviewforge.vercel.app`)
+- `MONGO_URI` (MongoDB Atlas Connection String)
+- `JWT_SECRET` (A strong random string)
+- `GROQ_API_KEY` (For fast Llama3 inference)
+- `OPENROUTER_API_KEY` (Fallback AI provider)
+- `OPENROUTER_MODEL=anthropic/claude-3.5-sonnet`
+- `GEMINI_API_KEY` (Fallback AI provider)
+- `FIREBASE_PROJECT_ID` (From Firebase Admin SDK JSON)
+- `FIREBASE_CLIENT_EMAIL` (From Firebase Admin SDK JSON)
+- `FIREBASE_PRIVATE_KEY` (From Firebase Admin SDK JSON)
+
+#### Frontend (Vercel)
+- `VITE_API_URL` (URL of your Render backend deployment, e.g., `https://interviewforge-api.onrender.com/api`)
+- `VITE_FIREBASE_API_KEY` (From Firebase Project Settings)
+- `VITE_FIREBASE_AUTH_DOMAIN`
+- `VITE_FIREBASE_PROJECT_ID`
+- `VITE_FIREBASE_STORAGE_BUCKET`
+- `VITE_FIREBASE_MESSAGING_SENDER_ID`
+- `VITE_FIREBASE_APP_ID`
+
+### Deployment Steps
+
+1. **Database**: Create a cluster on [MongoDB Atlas](https://www.mongodb.com/atlas) and retrieve your connection string.
+2. **Backend**: 
+   - Connect your GitHub repository to [Render](https://render.com).
+   - The provided `render.yaml` will automatically configure a Web Service.
+   - Enter your environment variables in the Render dashboard.
+3. **Frontend**:
+   - Connect your GitHub repository to [Vercel](https://vercel.com).
+   - Vercel will automatically detect Vite and use `npm run build`.
+   - The provided `vercel.json` ensures React Router client-side routing works properly.
+   - Enter your environment variables in the Vercel dashboard.
 
 ## Roadmap
 
@@ -108,7 +132,7 @@ The frontend will automatically proxy `/api` requests to the local backend on po
 - [x] **Phase 3.3 & 3.4 — AI Code Review**
 - [x] **Phase 3.5 & 3.6 — Analytics, Practice Hub & Assessments**
 - [x] **Phase 3.7 — App Preferences & Dark Mode**
-- [ ] **Phase 4 — Production Deployment**
+- [x] **Phase 4 — Production Deployment**
 
 ## License
 
