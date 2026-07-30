@@ -45,9 +45,17 @@ export const Dashboard = () => {
   const quickActions = [
     {
       title: 'Start AI Interview',
-      description: 'Jump right into a new mock interview session.',
+      description: 'Jump right into a new mock text interview session.',
       icon: Play,
       link: '/dashboard/interviews',
+      soon: false,
+      primary: true,
+    },
+    {
+      title: 'Live Audio/Video Interview',
+      description: 'Practice with a real-time AI using your webcam and mic.',
+      icon: Video,
+      link: '/dashboard/interview/live/setup',
       soon: false,
       primary: true,
     },
@@ -83,7 +91,7 @@ export const Dashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
-            className="bg-white border border-border rounded-2xl p-5 shadow-sm hover:shadow-md transition-all"
+            className="bg-card border border-border rounded-2xl p-5 shadow-sm hover:shadow-md transition-all"
           >
             <div className="flex items-center gap-4">
               <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", stat.bg)}>
@@ -113,9 +121,9 @@ export const Dashboard = () => {
                       to={action.link}
                       className={cn(
                         "group block p-6 rounded-2xl border transition-all relative overflow-hidden",
-                        action.soon ? "cursor-default border-border bg-gray-50" : "cursor-pointer bg-white shadow-sm",
+                        action.soon ? "cursor-default border-border bg-background" : "cursor-pointer bg-card shadow-sm",
                         action.primary && !action.soon ? "border-primary/20 hover:border-primary/40 hover:shadow-md" : "",
-                        !action.primary && !action.soon ? "border-border hover:border-gray-300 hover:shadow-md" : ""
+                        !action.primary && !action.soon ? "border-border hover:border-border hover:shadow-md" : ""
                       )}
                     >
                       {action.primary && (
@@ -123,7 +131,7 @@ export const Dashboard = () => {
                       )}
                       
                       <div className="flex items-start justify-between relative z-10">
-                        <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center mb-4", action.primary ? "bg-primary text-white shadow-md" : "bg-gray-100 text-primary border border-border")}>
+                        <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center mb-4", action.primary ? "bg-primary text-background shadow-md" : "bg-background text-primary border border-border")}>
                           <action.icon className="w-5 h-5" />
                         </div>
                       </div>
@@ -162,14 +170,14 @@ export const Dashboard = () => {
 
         {/* Right Column (Recent Activity) */}
         <div className="lg:col-span-1">
-          <section className="bg-white border border-border rounded-2xl p-6 h-full shadow-sm">
+          <section className="bg-card border border-border rounded-2xl p-6 h-full shadow-sm">
             <h2 className="text-lg font-bold text-primary mb-6">Interview History</h2>
             
             {loading ? (
               <div className="flex items-center justify-center py-12"><Activity className="w-8 h-8 text-indigo-400 animate-spin" /></div>
             ) : interviews.length === 0 ? (
               <div className="flex flex-col items-center justify-center text-center py-12 px-4 h-[300px]">
-                <div className="w-16 h-16 rounded-full bg-gray-50 border border-border flex items-center justify-center mb-4">
+                <div className="w-16 h-16 rounded-full bg-background border border-border flex items-center justify-center mb-4">
                   <Target className="w-8 h-8 text-gray-300" />
                 </div>
                 <h3 className="text-primary font-bold mb-2">No activity yet</h3>
@@ -178,7 +186,7 @@ export const Dashboard = () => {
             ) : (
               <div className="space-y-4">
                 {interviews.map((session, i) => (
-                  <motion.div key={session._id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }} className="p-4 rounded-xl border border-border hover:border-indigo-300 transition-colors bg-gray-50 hover:bg-white group">
+                  <motion.div key={session._id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }} className="p-4 rounded-xl border border-border hover:border-indigo-300 transition-colors bg-background hover:bg-card group">
                     <div className="flex justify-between items-start mb-2">
                       <div>
                         <h4 className="font-bold text-primary">{session.role}</h4>

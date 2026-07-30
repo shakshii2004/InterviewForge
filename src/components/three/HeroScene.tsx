@@ -87,16 +87,16 @@ export const HeroScene = () => {
                 overflow: 'hidden',
               }}
             >
-              <div className="w-full h-full flex flex-col font-sans bg-gray-50 border border-gray-200">
+              <div className="w-full h-full flex flex-col font-sans bg-background border border-border">
                 
                 {/* Mock Browser/App Header */}
-                <div className="h-12 bg-white border-b border-gray-200 flex items-center px-4 justify-between shadow-sm">
+                <div className="h-12 bg-card border-b border-border flex items-center px-4 justify-between shadow-sm">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-red-400" />
                     <div className="w-3 h-3 rounded-full bg-yellow-400" />
                     <div className="w-3 h-3 rounded-full bg-green-400" />
                   </div>
-                  <div className="font-semibold text-gray-800 text-sm">InterviewForge Live Session</div>
+                  <div className="font-semibold text-primary text-sm">InterviewForge Live Session</div>
                   <div className="w-16" />
                 </div>
 
@@ -125,7 +125,7 @@ export const HeroScene = () => {
                     
                     {/* User Video Feed */}
                     <div className="h-32 bg-gray-800 rounded-xl overflow-hidden relative shadow-inner w-48 border-2 border-primary">
-                      <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+                      <div className="absolute inset-0 flex items-center justify-center text-text-secondary">
                         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>

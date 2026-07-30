@@ -94,7 +94,7 @@ export const Profile = () => {
         <p className="text-text-secondary">Manage your public presence and professional details.</p>
       </div>
 
-      <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
+      <div className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
         <form onSubmit={handleSubmit(onSubmit)} className="divide-y divide-border">
           
           {/* Avatar Section */}
@@ -119,7 +119,7 @@ export const Profile = () => {
                 {...register('profileImage')}
                 type="text" 
                 placeholder="https://example.com/avatar.jpg"
-                className="w-full px-4 py-2 bg-gray-50 border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+                className="w-full px-4 py-2 bg-background border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
               />
               {errors.profileImage && <p className="mt-1 text-sm text-error">{errors.profileImage.message}</p>}
             </div>
@@ -137,7 +137,7 @@ export const Profile = () => {
                 <input 
                   {...register('name')}
                   type="text" 
-                  className="w-full px-4 py-2 bg-gray-50 border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+                  className="w-full px-4 py-2 bg-background border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
                 />
                 {errors.name && <p className="mt-1 text-sm text-error">{errors.name.message}</p>}
               </div>
@@ -148,7 +148,7 @@ export const Profile = () => {
                   type="email" 
                   value={user?.email || ''}
                   disabled
-                  className="w-full px-4 py-2 bg-gray-100 border border-border rounded-lg text-text-secondary cursor-not-allowed"
+                  className="w-full px-4 py-2 bg-background border border-border rounded-lg text-text-secondary cursor-not-allowed"
                 />
               </div>
 
@@ -158,7 +158,7 @@ export const Profile = () => {
                   {...register('bio')}
                   rows={4}
                   placeholder="Tell us about yourself..."
-                  className="w-full px-4 py-2 bg-gray-50 border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all resize-none"
+                  className="w-full px-4 py-2 bg-background border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all resize-none"
                 />
                 {errors.bio && <p className="mt-1 text-sm text-error">{errors.bio.message}</p>}
               </div>
@@ -178,7 +178,7 @@ export const Profile = () => {
                   {...register('targetRole')}
                   type="text" 
                   placeholder="e.g. Frontend Engineer, Full Stack Developer"
-                  className="w-full px-4 py-2 bg-gray-50 border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+                  className="w-full px-4 py-2 bg-background border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
                 />
               </div>
 
@@ -186,7 +186,7 @@ export const Profile = () => {
                 <label className="block text-sm font-bold text-primary mb-2">Experience Level</label>
                 <select 
                   {...register('experienceLevel')}
-                  className="w-full px-4 py-2 bg-gray-50 border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+                  className="w-full px-4 py-2 bg-background border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
                 >
                   <option value="Beginner">Beginner (0-2 years)</option>
                   <option value="Intermediate">Intermediate (3-5 years)</option>
@@ -203,7 +203,7 @@ export const Profile = () => {
                     {...register('skills')}
                     type="text" 
                     placeholder="React, TypeScript, Node.js"
-                    className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+                    className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
                   />
                 </div>
               </div>
@@ -223,7 +223,7 @@ export const Profile = () => {
                   {...register('github')}
                   type="text" 
                   placeholder="https://github.com/username"
-                  className="w-full px-4 py-2 bg-gray-50 border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+                  className="w-full px-4 py-2 bg-background border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
                 />
                 {errors.github && <p className="mt-1 text-sm text-error">{errors.github.message}</p>}
               </div>
@@ -234,14 +234,14 @@ export const Profile = () => {
                   {...register('linkedin')}
                   type="text" 
                   placeholder="https://linkedin.com/in/username"
-                  className="w-full px-4 py-2 bg-gray-50 border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+                  className="w-full px-4 py-2 bg-background border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
                 />
                 {errors.linkedin && <p className="mt-1 text-sm text-error">{errors.linkedin.message}</p>}
               </div>
             </div>
           </div>
 
-          <div className="p-6 bg-gray-50 flex justify-end">
+          <div className="p-6 bg-background flex justify-end">
             <Button 
               type="submit" 
               disabled={isSaving}

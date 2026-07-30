@@ -75,9 +75,9 @@ export const InterviewHistory = () => {
   });
 
   return (
-    <div className="bg-white border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col h-[calc(100vh-200px)] min-h-[600px]">
+    <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden flex flex-col h-[calc(100vh-200px)] min-h-[600px]">
       {/* Toolbar */}
-      <div className="p-4 border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gray-50/50">
+      <div className="p-4 border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-background/50">
         <div className="flex items-center gap-4">
           <div className="relative w-64">
             <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -94,7 +94,7 @@ export const InterviewHistory = () => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="pl-9 pr-8 py-2 text-sm border border-border rounded-lg appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer"
+              className="pl-9 pr-8 py-2 text-sm border border-border rounded-lg appearance-none bg-card focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer"
             >
               <option value="all">All Status</option>
               <option value="completed">Completed</option>
@@ -103,7 +103,7 @@ export const InterviewHistory = () => {
           </div>
         </div>
         
-        <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2 bg-white border border-border rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors">
+        <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-lg text-sm font-medium hover:bg-background transition-colors">
           <Download className="w-4 h-4" /> Export CSV
         </button>
       </div>
@@ -111,7 +111,7 @@ export const InterviewHistory = () => {
       {/* Table */}
       <div className="flex-1 overflow-auto">
         <table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 text-text-secondary sticky top-0 z-10 shadow-sm">
+          <thead className="bg-background text-text-secondary sticky top-0 z-10 shadow-sm">
             <tr>
               <th className="px-6 py-4 font-semibold">Date</th>
               <th className="px-6 py-4 font-semibold">Role</th>
@@ -123,12 +123,12 @@ export const InterviewHistory = () => {
           </thead>
           <tbody className="divide-y divide-border">
             {loading ? (
-              <tr><td colSpan={6} className="text-center py-12 text-gray-500">Loading history...</td></tr>
+              <tr><td colSpan={6} className="text-center py-12 text-text-secondary">Loading history...</td></tr>
             ) : filteredHistory.length === 0 ? (
-              <tr><td colSpan={6} className="text-center py-12 text-gray-500">No interviews found.</td></tr>
+              <tr><td colSpan={6} className="text-center py-12 text-text-secondary">No interviews found.</td></tr>
             ) : (
               filteredHistory.map((item) => (
-                <tr key={item._id} className="hover:bg-gray-50/50 transition-colors">
+                <tr key={item._id} className="hover:bg-background/50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap text-text-secondary">{new Date(item.createdAt).toLocaleDateString()}</td>
                   <td className="px-6 py-4 whitespace-nowrap font-medium text-primary">{item.role}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-text-secondary capitalize">{item.interviewType}</td>
@@ -156,7 +156,7 @@ export const InterviewHistory = () => {
       </div>
       
       {/* Simple Pagination Footer Placeholder */}
-      <div className="p-4 border-t border-border flex items-center justify-between text-sm text-text-secondary bg-white">
+      <div className="p-4 border-t border-border flex items-center justify-between text-sm text-text-secondary bg-card">
         <span>Showing {filteredHistory.length} interviews</span>
         <div className="flex gap-2">
           <button disabled className="p-1 rounded border border-border opacity-50 cursor-not-allowed"><ChevronLeft className="w-5 h-5"/></button>

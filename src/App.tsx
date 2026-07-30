@@ -31,6 +31,11 @@ import { PracticeHub } from './pages/coding/practice/PracticeHub';
 import { AssessmentHub } from './pages/coding/assessments/AssessmentHub';
 import { AssessmentWorkspace } from './pages/coding/assessments/AssessmentWorkspace';
 
+// Phase 3.7: Live Interviews
+import { LiveSetup } from './pages/interviews/live/LiveSetup';
+import { LiveSession } from './pages/interviews/live/LiveSession';
+import { LiveReport } from './pages/interviews/live/LiveReport';
+
 function App() {
   return (
     <AuthProvider>
@@ -82,6 +87,11 @@ function App() {
             <Route path="/dashboard/coding/review/:reviewId" element={<CodeReviewPage />} />
             <Route path="/dashboard/coding/assessment/:assessmentId" element={<AssessmentWorkspace />} />
             <Route path="/interview/:sessionId" element={<InterviewSession />} />
+            
+            {/* Phase 3.7: Live Voice/Video Interviews */}
+            <Route path="/dashboard/interview/live/setup" element={<LiveSetup />} />
+            <Route path="/dashboard/interview/live/session/:sessionId" element={<LiveSession />} />
+            <Route path="/dashboard/interview/live/report/:sessionId" element={<LiveReport />} />
             <Route path="/evaluation/:sessionId" element={<Evaluation />} />
             <Route path="/coding/session/:sessionId" element={<CodingSession />} />
             <Route path="/coding/review/:submissionId" element={<CodeReviewPage />} />

@@ -11,7 +11,7 @@ export const ConsolePanel = ({ results, isRunning, isSubmitting }: ConsolePanelP
 
   return (
     <div className="h-full flex flex-col bg-slate-50 border-t border-slate-200 overflow-hidden">
-      <div className="h-10 border-b border-slate-200 flex items-center px-4 bg-white shrink-0">
+      <div className="h-10 border-b border-slate-200 flex items-center px-4 bg-card shrink-0">
         <div className="flex items-center gap-2">
           <Terminal className="w-4 h-4 text-slate-500" />
           <span className="text-sm font-bold text-slate-700">Console</span>
@@ -31,7 +31,7 @@ export const ConsolePanel = ({ results, isRunning, isSubmitting }: ConsolePanelP
         ) : (
           <div className="space-y-6">
             {results.map((res, index) => (
-              <div key={index} className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+              <div key={index} className="bg-card rounded-xl border border-slate-200 overflow-hidden shadow-sm">
                 <div className={`px-4 py-3 border-b flex items-center justify-between ${
                   res.passed ? 'bg-emerald-50 border-emerald-100' : 
                   res.status.includes('Error') ? 'bg-red-50 border-red-100' : 'bg-rose-50 border-rose-100'

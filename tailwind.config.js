@@ -4,20 +4,24 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        background: "#FAFAFA",
-        primary: "#28112B",
-        accent: "#8DAA91",
-        text: {
-          DEFAULT: "#111827",
-          secondary: "#6B7280",
+        background: "rgb(var(--background) / <alpha-value>)",
+        primary: {
+          DEFAULT: "rgb(var(--primary) / <alpha-value>)",
+          foreground: "rgb(var(--primary-foreground) / <alpha-value>)",
         },
-        border: "#E5E7EB",
-        card: "#FFFFFF",
-        success: "#22C55E",
-        error: "#EF4444",
+        accent: "rgb(var(--accent) / <alpha-value>)",
+        text: {
+          DEFAULT: "rgb(var(--text) / <alpha-value>)",
+          secondary: "rgb(var(--text-secondary) / <alpha-value>)",
+        },
+        border: "rgb(var(--border) / <alpha-value>)",
+        card: "rgb(var(--card) / <alpha-value>)",
+        success: "rgb(var(--success) / <alpha-value>)",
+        error: "rgb(var(--error) / <alpha-value>)",
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

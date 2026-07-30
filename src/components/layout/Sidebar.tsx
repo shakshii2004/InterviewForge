@@ -14,11 +14,11 @@ export const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-64 border-r border-border bg-white/50 backdrop-blur-xl hidden lg:flex flex-col h-full sticky top-0">
+    <aside className="w-64 border-r border-border bg-card/50 backdrop-blur-xl hidden lg:flex flex-col h-full sticky top-0">
       <div className="h-16 flex items-center px-6 border-b border-border">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-white font-bold text-lg leading-none">I</span>
+            <span className="text-background font-bold text-lg leading-none">I</span>
           </div>
           <span className="font-bold text-xl tracking-tight text-primary">InterviewForge</span>
         </div>
@@ -41,7 +41,7 @@ export const Sidebar = () => {
                 item.soon ? "opacity-60 cursor-default" : "cursor-pointer",
                 isActive && !item.soon
                   ? "bg-primary/5 text-primary"
-                  : "text-text-secondary hover:bg-gray-50 hover:text-primary"
+                  : "text-text-secondary hover:bg-background hover:text-primary"
               )
             }
           >
@@ -49,7 +49,7 @@ export const Sidebar = () => {
             {item.name}
             
             {item.soon && (
-              <span className="ml-auto text-[10px] uppercase tracking-wider bg-gray-100 text-text-secondary px-1.5 py-0.5 rounded-md">
+              <span className="ml-auto text-[10px] uppercase tracking-wider bg-background text-text-secondary px-1.5 py-0.5 rounded-md">
                 Soon
               </span>
             )}
@@ -61,7 +61,7 @@ export const Sidebar = () => {
         <div className="bg-gradient-to-r from-primary/5 to-accent/10 p-4 rounded-xl border border-primary/10 text-center">
           <h4 className="text-primary font-bold mb-1">Upgrade to Pro</h4>
           <p className="text-sm text-text-secondary mb-3">Unlock advanced AI mocks.</p>
-          <button className="w-full py-2 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors shadow-md">
+          <button className="w-full py-2 bg-primary text-background rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors shadow-md">
             View Plans
           </button>
         </div>

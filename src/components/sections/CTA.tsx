@@ -4,7 +4,7 @@ import { Button } from '../ui/Button';
 
 export const CTA = () => {
   return (
-    <section className="py-32 bg-white relative overflow-hidden">
+    <section className="py-32 bg-card relative overflow-hidden">
       {/* Decorative background blur */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
       

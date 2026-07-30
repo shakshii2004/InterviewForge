@@ -5,7 +5,7 @@ export const ProblemPanel = ({ submissions = [] }: { submissions?: any[] }) => {
   const [activeTab, setActiveTab] = useState<'description' | 'solutions' | 'submissions'>('description');
 
   return (
-    <div className="h-full flex flex-col bg-white overflow-hidden">
+    <div className="h-full flex flex-col bg-card overflow-hidden">
       {/* Tabs */}
       <div className="h-10 border-b border-slate-200 flex items-center px-2 bg-slate-50">
         <button 
@@ -139,7 +139,7 @@ export const ProblemPanel = ({ submissions = [] }: { submissions?: any[] }) => {
                       href={`/coding/review/${sub._id}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-primary hover:bg-primary/90 rounded-md transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-background bg-primary hover:bg-primary/90 rounded-md transition-colors"
                     >
                       <Lightbulb className="w-3.5 h-3.5" />
                       View AI Review

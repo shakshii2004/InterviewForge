@@ -12,9 +12,22 @@ import {
   evaluateSession
 } from '../controllers/interviewController';
 
+import { 
+  startLiveInterview, 
+  updateTranscript, 
+  finishLiveInterview, 
+  getLiveInterview 
+} from '../controllers/liveInterviewController';
+
 const router = express.Router();
 
 router.use(protect);
+
+// Phase 3.7 Live Interview Routes
+router.post('/live/start', startLiveInterview);
+router.post('/live/transcript/:sessionId', updateTranscript);
+router.post('/live/finish/:sessionId', finishLiveInterview);
+router.get('/live/:sessionId', getLiveInterview);
 
 router.post('/', createInterview);
 router.get('/', getInterviews);
@@ -30,5 +43,7 @@ router.post('/:id/evaluate', evaluateSession);
 // Pause and Resume endpoints can be implemented as frontend state, but we provide stubs if needed.
 router.post('/:id/pause', (req, res) => { res.json({success:true}) });
 router.post('/:id/resume', (req, res) => { res.json({success:true}) });
+
+
 
 export default router;

@@ -132,7 +132,7 @@ export const CodeReviewPage = () => {
         </div>
 
         {/* --- MAIN REPORT CONTAINER --- */}
-        <div ref={reportRef} className="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+        <div ref={reportRef} className="bg-card rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
           
           {/* Header Banner */}
           <div className="relative bg-slate-900 p-8 md:p-12 overflow-hidden">
@@ -142,7 +142,7 @@ export const CodeReviewPage = () => {
             <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
               <div>
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="px-3 py-1 bg-white/10 text-white rounded-lg text-sm font-medium backdrop-blur-sm">
+                  <span className="px-3 py-1 bg-card/10 text-white rounded-lg text-sm font-medium backdrop-blur-sm">
                     Interview Report
                   </span>
                   <span className="px-3 py-1 bg-indigo-500/20 text-indigo-200 border border-indigo-500/30 rounded-lg text-sm font-medium backdrop-blur-sm">
@@ -211,7 +211,7 @@ export const CodeReviewPage = () => {
 
             {/* Row 2: Radar Chart & Sub-Scores */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl p-6 flex flex-col items-center">
+              <div className="lg:col-span-1 bg-card border border-slate-200 rounded-2xl p-6 flex flex-col items-center">
                 <h3 className="text-lg font-bold text-slate-800 mb-2">Performance Radar</h3>
                 <ResponsiveContainer width="100%" height={280}>
                   <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
@@ -241,7 +241,7 @@ export const CodeReviewPage = () => {
                   <h3 className="text-lg font-bold text-indigo-900 flex items-center gap-2">
                     <Clock className="w-5 h-5 text-indigo-600" /> Time Complexity
                   </h3>
-                  <span className="px-3 py-1 bg-white text-indigo-700 font-bold rounded-lg border border-indigo-200 shadow-sm">{review.timeComplexity}</span>
+                  <span className="px-3 py-1 bg-card text-indigo-700 font-bold rounded-lg border border-indigo-200 shadow-sm">{review.timeComplexity}</span>
                 </div>
                 <p className="text-indigo-800 leading-relaxed text-sm">
                   {review.timeComplexityExplanation || "No detailed explanation provided."}
@@ -253,7 +253,7 @@ export const CodeReviewPage = () => {
                   <h3 className="text-lg font-bold text-blue-900 flex items-center gap-2">
                     <Box className="w-5 h-5 text-blue-600" /> Space Complexity
                   </h3>
-                  <span className="px-3 py-1 bg-white text-blue-700 font-bold rounded-lg border border-blue-200 shadow-sm">{review.spaceComplexity}</span>
+                  <span className="px-3 py-1 bg-card text-blue-700 font-bold rounded-lg border border-blue-200 shadow-sm">{review.spaceComplexity}</span>
                 </div>
                 <p className="text-blue-800 leading-relaxed text-sm">
                   {review.spaceComplexityExplanation || "No detailed explanation provided."}
@@ -272,14 +272,14 @@ export const CodeReviewPage = () => {
                     <span className="text-slate-400 text-sm font-medium">{submission.language}</span>
                     <button 
                       onClick={copyCode}
-                      className="p-2 hover:bg-white/10 rounded-lg text-slate-300 transition-colors"
+                      className="p-2 hover:bg-card/10 rounded-lg text-slate-300 transition-colors"
                       title="Copy code"
                     >
                       {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                     </button>
                     <button 
                       onClick={() => setShowCode(!showCode)}
-                      className="text-sm px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors"
+                      className="text-sm px-3 py-1.5 bg-card/10 hover:bg-card/20 text-white rounded-lg transition-colors"
                     >
                       {showCode ? 'Collapse' : 'Expand'}
                     </button>
@@ -311,7 +311,7 @@ export const CodeReviewPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               
               {/* Edge Case Analysis */}
-              <div className="bg-white border border-slate-200 rounded-2xl p-6">
+              <div className="bg-card border border-slate-200 rounded-2xl p-6">
                 <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
                   <Shield className="w-5 h-5 text-emerald-500" /> Edge Case Analysis
                 </h3>
@@ -339,7 +339,7 @@ export const CodeReviewPage = () => {
 
               {/* Interview Readiness & Industry Comparison */}
               <div className="space-y-6">
-                <div className="bg-white border border-slate-200 rounded-2xl p-6">
+                <div className="bg-card border border-slate-200 rounded-2xl p-6">
                   <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
                     <Target className="w-5 h-5 text-indigo-500" /> Interview Readiness
                   </h3>
@@ -355,7 +355,7 @@ export const CodeReviewPage = () => {
                   <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl translate-x-1/2 -translate-y-1/2"></div>
                   <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2 relative z-10">
                     <TrendingUp className="w-5 h-5 text-indigo-400" /> Industry Comparison
-                    <span className="text-[10px] uppercase tracking-wider bg-white/10 px-2 py-0.5 rounded-full ml-auto text-slate-300">AI Estimate</span>
+                    <span className="text-[10px] uppercase tracking-wider bg-card/10 px-2 py-0.5 rounded-full ml-auto text-slate-300">AI Estimate</span>
                   </h3>
                   
                   <div className="space-y-5 relative z-10">
@@ -379,7 +379,7 @@ export const CodeReviewPage = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="mt-5 text-sm text-center font-medium text-indigo-200 bg-white/5 py-2 rounded-lg">
+                  <div className="mt-5 text-sm text-center font-medium text-indigo-200 bg-card/5 py-2 rounded-lg">
                     Estimated Percentile: <span className="text-white font-bold">{review.industryComparison?.estimatedPercentile || 'Top 50%'}</span>
                   </div>
                 </div>
@@ -397,7 +397,7 @@ export const CodeReviewPage = () => {
             {/* Interviewer Notes & Checklist */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               
-              <div className="lg:col-span-2 bg-white border border-slate-200 rounded-2xl p-6 md:p-8">
+              <div className="lg:col-span-2 bg-card border border-slate-200 rounded-2xl p-6 md:p-8">
                 <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
                   <MessageSquare className="w-6 h-6 text-indigo-500" /> Interviewer Notes
                 </h3>
@@ -423,7 +423,7 @@ export const CodeReviewPage = () => {
                 </div>
               </div>
 
-              <div className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl p-6">
+              <div className="lg:col-span-1 bg-card border border-slate-200 rounded-2xl p-6">
                 <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
                   <CheckSquare className="w-5 h-5 text-blue-500" /> Improvement Checklist
                 </h3>
@@ -442,7 +442,7 @@ export const CodeReviewPage = () => {
 
             {/* Learning Roadmap */}
             {review.learningRoadmap?.length > 0 && (
-              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+              <div className="bg-card border border-slate-200 rounded-2xl overflow-hidden">
                 <div className="p-6 border-b border-slate-100">
                   <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
                     <Brain className="w-5 h-5 text-purple-500" /> Personalized Learning Roadmap
@@ -498,7 +498,7 @@ const DetailItem = ({ label, value, valueColor = 'text-slate-800' }: any) => (
 );
 
 const MetricCard = ({ label, value, icon }: any) => (
-  <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm flex items-center gap-3">
+  <div className="bg-card p-3 rounded-xl border border-slate-100 shadow-sm flex items-center gap-3">
     <div className="p-2 bg-slate-50 rounded-lg">{icon}</div>
     <div>
       <div className="text-xs text-slate-500 font-medium">{label}</div>
@@ -518,7 +518,7 @@ const ScoreCard = ({ title, score, icon, subtitle = '' }: any) => {
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+      className="p-5 rounded-2xl bg-card border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
     >
       <div className="flex justify-between items-start mb-3">
         <span className="text-sm font-medium text-slate-600">{title}</span>

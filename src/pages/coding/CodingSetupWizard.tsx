@@ -101,9 +101,9 @@ export const CodingSetupWizard = () => {
             <div key={step.id} className="relative z-10 flex flex-col items-center gap-3">
               <div 
                 className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-sm
-                  ${isActive ? 'bg-primary text-white scale-110 shadow-primary/30' : 
+                  ${isActive ? 'bg-primary text-background scale-110 shadow-primary/30' : 
                     isCompleted ? 'bg-primary/20 text-primary' : 
-                    'bg-white border-2 border-slate-100 text-slate-400'}`}
+                    'bg-card border-2 border-slate-100 text-slate-400'}`}
               >
                 <step.icon className="w-6 h-6" />
               </div>
@@ -118,7 +118,7 @@ export const CodingSetupWizard = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 bg-white rounded-3xl p-8 border border-slate-100 shadow-sm relative overflow-hidden">
+      <div className="flex-1 bg-card rounded-3xl p-8 border border-slate-100 shadow-sm relative overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStep}
@@ -196,7 +196,7 @@ export const CodingSetupWizard = () => {
                         onClick={() => toggleTopic(topic)}
                         className={`px-4 py-2.5 rounded-xl border-2 font-medium transition-all
                           ${isSelected 
-                            ? 'border-primary bg-primary text-white shadow-md shadow-primary/20' 
+                            ? 'border-primary bg-primary text-background shadow-md shadow-primary/20' 
                             : 'border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50'}`}
                       >
                         {topic}
@@ -281,7 +281,7 @@ export const CodingSetupWizard = () => {
                     <span className="text-slate-500 mt-1">Topics</span>
                     <div className="flex flex-wrap gap-2 justify-end pl-4">
                       {setupData.topics.map(t => (
-                        <span key={t} className="px-2 py-1 bg-white text-slate-600 rounded-md text-xs font-semibold border border-slate-200">
+                        <span key={t} className="px-2 py-1 bg-card text-slate-600 rounded-md text-xs font-semibold border border-slate-200">
                           {t}
                         </span>
                       ))}
@@ -301,7 +301,7 @@ export const CodingSetupWizard = () => {
         <button
           onClick={() => currentStep > 0 ? setCurrentStep(s => s - 1) : navigate('/dashboard/coding')}
           disabled={loading}
-          className="px-6 py-3 rounded-xl font-bold text-slate-500 flex items-center gap-2 hover:bg-white hover:shadow-sm border-2 border-transparent hover:border-slate-100 transition-all disabled:opacity-50"
+          className="px-6 py-3 rounded-xl font-bold text-slate-500 flex items-center gap-2 hover:bg-card hover:shadow-sm border-2 border-transparent hover:border-slate-100 transition-all disabled:opacity-50"
         >
           <ChevronLeft className="w-5 h-5" />
           {currentStep === 0 ? 'Cancel' : 'Back'}
@@ -311,7 +311,7 @@ export const CodingSetupWizard = () => {
           <button
             onClick={() => setCurrentStep(s => s + 1)}
             disabled={!canProceed()}
-            className="px-8 py-3 rounded-xl font-bold bg-primary text-white flex items-center gap-2 hover:bg-primary/90 transition-all shadow-md shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-8 py-3 rounded-xl font-bold bg-primary text-background flex items-center gap-2 hover:bg-primary/90 transition-all shadow-md shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continue
             <ChevronRight className="w-5 h-5" />

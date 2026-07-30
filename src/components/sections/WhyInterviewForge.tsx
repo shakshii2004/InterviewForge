@@ -12,7 +12,7 @@ const advantages = [
 
 export const WhyInterviewForge = () => {
   return (
-    <section className="py-32 bg-primary text-white overflow-hidden">
+    <section className="py-32 bg-primary text-background overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         
         <motion.div 
@@ -46,7 +46,7 @@ export const WhyInterviewForge = () => {
         </motion.div>
 
         <motion.div 
-          className="relative h-[500px] rounded-3xl bg-white/5 border border-white/10 p-8 flex items-center justify-center overflow-hidden"
+          className="relative h-[500px] rounded-3xl bg-card/5 border border-white/10 p-8 flex items-center justify-center overflow-hidden"
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -67,7 +67,7 @@ export const WhyInterviewForge = () => {
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div 
-            className="absolute bottom-10 right-10 w-32 h-32 rounded-full bg-white/10 blur-3xl"
+            className="absolute bottom-10 right-10 w-32 h-32 rounded-full bg-card/10 blur-3xl"
             animate={{ y: [0, 30, 0], scale: [1, 1.2, 1] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           />

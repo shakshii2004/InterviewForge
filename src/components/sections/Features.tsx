@@ -52,7 +52,7 @@ const PremiumCard = ({ children, className, glowColor }: { children: React.React
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.5, type: "spring", stiffness: 100, damping: 20 }}
-      className={`relative rounded-[32px] bg-white/40 backdrop-blur-md border border-white/60 overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-white/90 ${className}`}
+      className={`relative rounded-[32px] bg-card/40 backdrop-blur-md border border-white/60 overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-white/90 ${className}`}
       style={{ boxShadow: `0 12px 48px 0 rgba(31,38,135,0.05), inset 0 1px 1px 0 rgba(255,255,255,1), inset 0 -1px 1px 0 rgba(255,255,255,0.3)` }}
     >
       {/* Spotlight Effect */}

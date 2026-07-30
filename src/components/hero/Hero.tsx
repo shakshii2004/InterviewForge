@@ -43,7 +43,7 @@ export const Hero = () => {
             <Link to="/register">
               <Button size="lg" className="px-8 shadow-xl shadow-primary/10">Start Free</Button>
             </Link>
-            <Button size="lg" variant="secondary" className="px-8 bg-white/50 backdrop-blur-sm">Watch Demo</Button>
+            <Button size="lg" variant="secondary" className="px-8 bg-card/50 backdrop-blur-sm">Watch Demo</Button>
           </motion.div>
         </div>
 

@@ -1,11 +1,19 @@
-import { GoogleGenAI } from '@google/genai';
+import { initializeApp, cert, getApps } from 'firebase-admin/app';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
-async function list() {
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-  const response = await ai.models.list();
-  console.log(JSON.stringify(response, null, 2));
-}
+try {
+  const serviceAccount = {
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+  };
 
-list().catch(console.error);
+  initializeApp({
+    credential: cert(serviceAccount),
+  });
+  console.log('SUCCESS: Firebase Admin initialized correctly with the provided credentials.');
+} catch (error: any) {
+  console.error('FAILED to initialize Firebase Admin:', error.message);
+}

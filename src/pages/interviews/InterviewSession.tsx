@@ -214,7 +214,7 @@ export const InterviewSession = () => {
           <p className="text-text-secondary mb-8 max-w-md">
             {isGenerating ? 'Generating contextual follow-up questions tailored to your experience.' : 'Setting up your interview room.'}
           </p>
-          <div className="w-64 h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div className="w-64 h-2 bg-background rounded-full overflow-hidden">
             <div className="h-full bg-primary w-1/2 rounded-full animate-[progress_1s_ease-in-out_infinite]" />
           </div>
         </div>
@@ -229,7 +229,7 @@ export const InterviewSession = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="h-16 bg-white/50 backdrop-blur-xl border-b border-border flex items-center justify-between px-6 sticky top-0 z-50">
+      <header className="h-16 bg-card/50 backdrop-blur-xl border-b border-border flex items-center justify-between px-6 sticky top-0 z-50">
         <div className="flex items-center gap-2">
           <BrainCircuit className="w-6 h-6 text-primary" />
           <span className="font-bold text-primary">InterviewForge</span>
@@ -237,7 +237,7 @@ export const InterviewSession = () => {
         
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-48 h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div className="w-48 h-2 bg-background rounded-full overflow-hidden">
               <div 
                 className="h-full bg-primary transition-all duration-500"
                 style={{ width: `${(session.currentQuestionIndex / session.totalQuestions) * 100}%` }}
@@ -260,19 +260,19 @@ export const InterviewSession = () => {
 
       <div className="flex-1 flex overflow-hidden">
         {/* Sidebar Context */}
-        <aside className="w-72 bg-white/30 border-r border-border p-6 hidden lg:flex flex-col gap-6">
+        <aside className="w-72 bg-card/30 border-r border-border p-6 hidden lg:flex flex-col gap-6">
           <div>
             <h3 className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-3">Interview Context</h3>
             <div className="space-y-4">
-              <div className="bg-white p-3 rounded-xl border border-border">
+              <div className="bg-card p-3 rounded-xl border border-border">
                 <span className="text-xs text-text-secondary block mb-1">Target Role</span>
                 <span className="font-bold text-primary">{session.role}</span>
               </div>
-              <div className="bg-white p-3 rounded-xl border border-border">
+              <div className="bg-card p-3 rounded-xl border border-border">
                 <span className="text-xs text-text-secondary block mb-1">Interview Type</span>
                 <span className="font-bold text-primary">{session.interviewType}</span>
               </div>
-              <div className="bg-white p-3 rounded-xl border border-border flex justify-between items-center">
+              <div className="bg-card p-3 rounded-xl border border-border flex justify-between items-center">
                 <span className="text-xs text-text-secondary">Difficulty</span>
                 <span className={cn(
                   "text-xs font-bold px-2 py-1 rounded-md",
@@ -301,7 +301,7 @@ export const InterviewSession = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="bg-white rounded-3xl p-8 border border-border shadow-sm relative overflow-hidden"
+                className="bg-card rounded-3xl p-8 border border-border shadow-sm relative overflow-hidden"
               >
                 <div className="absolute top-0 left-0 w-1 h-full bg-accent" />
                 <div className="flex items-center gap-2 mb-4">
@@ -321,8 +321,8 @@ export const InterviewSession = () => {
             </AnimatePresence>
 
             {/* Answer Area */}
-            <div className="bg-white rounded-3xl border border-border shadow-sm flex flex-col focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-              <div className="p-4 border-b border-border flex justify-between items-center bg-gray-50/50 rounded-t-3xl">
+            <div className="bg-card rounded-3xl border border-border shadow-sm flex flex-col focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+              <div className="p-4 border-b border-border flex justify-between items-center bg-background/50 rounded-t-3xl">
                 <span className="text-sm font-medium text-text-secondary flex items-center gap-2">
                   Your Answer
                   {saveStatus === 'saving' && <Loader2 className="w-3 h-3 animate-spin text-text-secondary" />}

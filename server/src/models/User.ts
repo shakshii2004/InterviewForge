@@ -18,9 +18,23 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, 'Please provide a password'],
-      minlength: 6,
-      select: false, // Do not return password by default
+      required: [
+        function (this: any) {
+          return this.provider === 'local';
+        },
+        'Please provide a password',
+      ],
+      minlength: 8,
+      select: false,
+    },
+    provider: {
+      type: String,
+      enum: ['local', 'google'],
+      default: 'local',
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
     },
     bio: {
       type: String,
@@ -69,13 +83,22 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Hash password before saving
+// Hash password before saving and lowercase email
 userSchema.pre('save', async function () {
-  if (!this.isModified('password')) {
+  if (this.isModified('email')) {
+    this.email = this.email.toLowerCase();
+  }
+
+  if (!this.isModified('password') || !this.password) {
     return;
   }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  } catch (err: any) {
+    throw err;
+  }
 });
 
 // Compare user password

@@ -1,6 +1,6 @@
 export const TrustedBy = () => {
   return (
-    <section className="py-12 border-b border-border bg-white">
+    <section className="py-12 border-b border-border bg-card">
       <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
         <p className="text-sm font-medium text-text-secondary mb-8 uppercase tracking-widest">
           Trusted by engineers from top companies

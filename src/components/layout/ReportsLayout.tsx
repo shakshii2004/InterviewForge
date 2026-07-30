@@ -31,7 +31,7 @@ export const ReportsLayout = () => {
                 'flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-t-lg transition-colors whitespace-nowrap border-b-2',
                 isActive
                   ? 'border-indigo-500 text-indigo-600 bg-indigo-50/50'
-                  : 'border-transparent text-text-secondary hover:text-primary hover:bg-gray-50'
+                  : 'border-transparent text-text-secondary hover:text-primary hover:bg-background'
               )
             }
           >

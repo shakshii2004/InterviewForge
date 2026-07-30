@@ -78,7 +78,7 @@ export const ProductStory = () => {
                     transition={{ duration: 0.6 }}
                     className="relative pl-12"
                   >
-                    <div className="absolute -left-0 top-1 w-6 h-6 rounded-full border-4 border-background bg-white shadow-sm flex items-center justify-center z-10">
+                    <div className="absolute -left-0 top-1 w-6 h-6 rounded-full border-4 border-background bg-card shadow-sm flex items-center justify-center z-10">
                        <motion.div 
                          className="w-2 h-2 rounded-full bg-primary"
                          initial={{ scale: 0 }}
@@ -101,7 +101,7 @@ export const ProductStory = () => {
         {/* Right Column - Sticky 3D Scene (55%) */}
         <div className="w-full md:w-[55%] h-[60vh] md:h-screen sticky top-0 flex items-center justify-center py-8">
            {/* Generous whitespace and minimal aesthetic container */}
-           <div className="relative w-full h-[80%] rounded-[32px] bg-white/40 backdrop-blur-md border border-white shadow-[0_8px_32px_0_rgba(31,38,135,0.05)] overflow-hidden flex flex-col items-center justify-center group transition-all duration-500 hover:shadow-[0_12px_48px_0_rgba(139,92,246,0.1)]">
+           <div className="relative w-full h-[80%] rounded-[32px] bg-card/40 backdrop-blur-md border border-white shadow-[0_8px_32px_0_rgba(31,38,135,0.05)] overflow-hidden flex flex-col items-center justify-center group transition-all duration-500 hover:shadow-[0_12px_48px_0_rgba(139,92,246,0.1)]">
               
               {/* Soft purple and teal radial gradient blur blobs */}
               <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-primary/10 blur-[90px] rounded-full pointer-events-none transition-all duration-700 group-hover:bg-primary/20" />
@@ -118,7 +118,7 @@ export const ProductStory = () => {
               </div>
 
               {/* Decorative overlay UI element */}
-              <div className="absolute bottom-8 left-8 right-8 max-w-sm mx-auto p-4 rounded-2xl flex items-center gap-4 bg-white/70 backdrop-blur-xl shadow-glass border border-white z-20 transition-transform duration-500 group-hover:-translate-y-1">
+              <div className="absolute bottom-8 left-8 right-8 max-w-sm mx-auto p-4 rounded-2xl flex items-center gap-4 bg-card/70 backdrop-blur-xl shadow-glass border border-white z-20 transition-transform duration-500 group-hover:-translate-y-1">
                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                  </div>

@@ -25,13 +25,13 @@ export const ProgressMilestones = () => {
   }, []);
 
   if (loading) return <div className="flex justify-center py-20"><Activity className="w-8 h-8 text-indigo-500 animate-spin" /></div>;
-  if (!data || data.length === 0) return <div className="text-center py-20 text-gray-500">Not enough data to map progress. Complete at least one interview!</div>;
+  if (!data || data.length === 0) return <div className="text-center py-20 text-text-secondary">Not enough data to map progress. Complete at least one interview!</div>;
 
   return (
     <div className="space-y-6">
       
       {/* Line Chart */}
-      <div className="bg-white p-6 rounded-2xl border border-border shadow-sm">
+      <div className="bg-card p-6 rounded-2xl border border-border shadow-sm">
         <h2 className="text-lg font-bold text-primary mb-6 flex items-center gap-2"><LineChartIcon className="w-5 h-5 text-indigo-500" /> Score Progression</h2>
         <div className="h-[350px] w-full">
           <ResponsiveContainer width="100%" height="100%">

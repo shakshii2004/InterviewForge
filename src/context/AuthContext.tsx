@@ -1,6 +1,9 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { api } from '../lib/api';
+import { auth, googleProvider } from '../lib/firebase';
+import { signInWithPopup } from 'firebase/auth';
+import toast from 'react-hot-toast';
 
 interface User {
   _id: string;
@@ -25,6 +28,8 @@ interface AuthContextType {
   isLoading: boolean;
   login: (userData: User) => void;
   logout: () => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
+  updateUser: (updates: Partial<User>) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -51,8 +56,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     fetchSession();
   }, []);
 
+  // Theme effect
+  useEffect(() => {
+    if (user?.preferences?.theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [user?.preferences?.theme]);
+
   const login = (userData: User) => {
     setUser(userData);
+  };
+
+  const updateUser = (updates: Partial<User>) => {
+    setUser((prev) => prev ? { ...prev, ...updates } : null);
   };
 
   const logout = async () => {
@@ -64,8 +82,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const loginWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const idToken = await result.user.getIdToken();
+      
+      const response = await api.post('/auth/google', { token: idToken });
+      
+      if (response.data.success) {
+        setUser(response.data.user);
+        toast.success('Signed in with Google!');
+      }
+    } catch (error: any) {
+      console.error('Google Sign-In Error:', error);
+      toast.error(error.response?.data?.message || error.message || 'Failed to sign in with Google');
+      throw error;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, login, logout, loginWithGoogle, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

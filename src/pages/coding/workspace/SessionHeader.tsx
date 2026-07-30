@@ -47,7 +47,7 @@ export const SessionHeader = ({ session, language, onLanguageChange, isSaving, l
   const languages = ['Java', 'C++', 'Python', 'JavaScript'];
 
   return (
-    <div className="h-14 border-b border-slate-200 bg-white flex items-center justify-between px-4 sticky top-0 z-20">
+    <div className="h-14 border-b border-slate-200 bg-card flex items-center justify-between px-4 sticky top-0 z-20">
       <div className="flex items-center gap-4">
         <button 
           onClick={() => navigate('/dashboard/coding')}
@@ -73,7 +73,7 @@ export const SessionHeader = ({ session, language, onLanguageChange, isSaving, l
         <select 
           value={language}
           onChange={(e) => onLanguageChange(e.target.value)}
-          className="text-sm font-semibold bg-white border border-slate-200 rounded-lg px-3 py-1.5 outline-none hover:border-slate-300 focus:border-primary transition-colors cursor-pointer"
+          className="text-sm font-semibold bg-card border border-slate-200 rounded-lg px-3 py-1.5 outline-none hover:border-slate-300 focus:border-primary transition-colors cursor-pointer"
         >
           {languages.map(lang => (
             <option key={lang} value={lang}>{lang}</option>

@@ -10,10 +10,16 @@ export interface IEvaluation extends Document {
   confidenceScore: number;
   projectScore: number;
   timeManagementScore: number;
+  behavioralScore?: number;
+  vocabularyRichness?: number;
   summary: string;
   strengths: string[];
   improvements: string[];
-  recommendedTopics: string[];
+  nextPracticePlan?: {
+    topicsToRevise: string[];
+    interviewTips: string[];
+    suggestedPractice: string[];
+  };
   questionFeedback: Array<{
     questionId: mongoose.Types.ObjectId | string;
     score: number;
@@ -36,10 +42,16 @@ const evaluationSchema = new Schema<IEvaluation>({
   confidenceScore: { type: Number, required: true },
   projectScore: { type: Number, required: true },
   timeManagementScore: { type: Number, required: true },
+  behavioralScore: { type: Number },
+  vocabularyRichness: { type: Number },
   summary: { type: String, required: true },
   strengths: [{ type: String }],
   improvements: [{ type: String }],
-  recommendedTopics: [{ type: String }],
+  nextPracticePlan: {
+    topicsToRevise: [{ type: String }],
+    interviewTips: [{ type: String }],
+    suggestedPractice: [{ type: String }]
+  },
   questionFeedback: [{
     questionId: { type: Schema.Types.Mixed, required: true },
     score: { type: Number, required: true },

@@ -53,7 +53,7 @@ export const EditorPanel = ({ language, code, onChange, onReset }: EditorPanelPr
   };
 
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div className="h-full flex flex-col bg-card">
       {/* Editor Toolbar */}
       <div className="h-10 border-b border-slate-200 flex items-center justify-between px-4 bg-slate-50">
         <div className="flex items-center gap-2">

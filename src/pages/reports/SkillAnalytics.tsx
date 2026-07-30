@@ -26,7 +26,7 @@ export const SkillAnalytics = () => {
   }, []);
 
   if (loading) return <div className="flex justify-center py-20"><Activity className="w-8 h-8 text-indigo-500 animate-spin" /></div>;
-  if (!data) return <div className="text-center py-20 text-gray-500">No skill data available.</div>;
+  if (!data) return <div className="text-center py-20 text-text-secondary">No skill data available.</div>;
 
   const barData = [
     { name: 'Tech', score: data.radarScores?.technical || 0 },
@@ -42,7 +42,7 @@ export const SkillAnalytics = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         
         {/* Core Attributes Bar */}
-        <div className="bg-white p-6 rounded-2xl border border-border shadow-sm">
+        <div className="bg-card p-6 rounded-2xl border border-border shadow-sm">
           <h2 className="text-lg font-bold text-primary mb-6 flex items-center gap-2"><TrendingUp className="w-5 h-5 text-indigo-500" /> Core Attributes Breakdown</h2>
           <div className="h-[250px] w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -57,19 +57,19 @@ export const SkillAnalytics = () => {
         </div>
 
         {/* Actionable Insights */}
-        <div className="bg-white p-6 rounded-2xl border border-border shadow-sm flex flex-col justify-center">
+        <div className="bg-card p-6 rounded-2xl border border-border shadow-sm flex flex-col justify-center">
           <h2 className="text-lg font-bold text-primary mb-4 flex items-center gap-2"><AlertTriangle className="w-5 h-5 text-amber-500" /> AI Recommendations</h2>
           {data.weakestSkills?.length > 0 ? (
             <div className="space-y-4">
               {data.weakestSkills.map((skill: string, idx: number) => (
-                <div key={idx} className="bg-gray-50 p-4 rounded-xl border border-border">
+                <div key={idx} className="bg-background p-4 rounded-xl border border-border">
                   <p className="font-bold text-primary mb-1">Improve: {skill}</p>
                   <p className="text-sm text-text-secondary">Based on recent interviews, focusing on this topic will yield the highest impact on your overall score.</p>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 text-sm">Not enough data to generate recommendations. Complete more interviews.</p>
+            <p className="text-text-secondary text-sm">Not enough data to generate recommendations. Complete more interviews.</p>
           )}
         </div>
       </div>
@@ -84,14 +84,14 @@ export const SkillAnalytics = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-white p-5 rounded-2xl border border-border shadow-sm flex items-center justify-between"
+              className="bg-card p-5 rounded-2xl border border-border shadow-sm flex items-center justify-between"
             >
               <span className="font-semibold text-primary">{skill}</span>
               <Star className="w-5 h-5 text-emerald-500 fill-emerald-500" />
             </motion.div>
           ))
         ) : (
-          <p className="text-gray-500 col-span-3">No specific strengths isolated yet.</p>
+          <p className="text-text-secondary col-span-3">No specific strengths isolated yet.</p>
         )}
       </div>
     </div>

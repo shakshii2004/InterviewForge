@@ -28,6 +28,7 @@ The following features have been successfully completed:
 - **Phase 3.3 & 3.4**: AI Code Review Engine. A senior-level AI pair programmer that provides deep code reviews on algorithm submissions. Analyzes for time/space complexity, edge cases, and design patterns, assigning an overall score out of 100.
 - **Phase 3.5**: Coding Analytics Dashboard. A dedicated dashboard tracking coding performance, solving streaks, topic-specific mastery, and an AI agent that dynamically suggests a personalized study roadmap.
 - **Phase 3.6**: Practice Hub, History & Assessments. A LeetCode-style Practice Hub with advanced problem filtering (Topic, Difficulty, Company). Includes a unified Mock Assessment & Contest engine to run timed multi-question challenges under pressure, and a comprehensive Coding History view featuring a side-by-side "Compare Attempts" tool.
+- **Phase 3.7**: App Preferences & Global Dark Mode. Implemented a robust global theming engine utilizing CSS variables mapped to Tailwind configuration, allowing users to toggle a premium Dark Mode. Preferences are securely synced with the backend user session.
 
 ## Architecture Updates
 
@@ -106,6 +107,7 @@ The frontend will automatically proxy `/api` requests to the local backend on po
 - [x] **Phase 3.1 & 3.2 — Coding Workspace & Execution**
 - [x] **Phase 3.3 & 3.4 — AI Code Review**
 - [x] **Phase 3.5 & 3.6 — Analytics, Practice Hub & Assessments**
+- [x] **Phase 3.7 — App Preferences & Dark Mode**
 - [ ] **Phase 4 — Production Deployment**
 
 ## License

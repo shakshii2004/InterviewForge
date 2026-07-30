@@ -43,7 +43,7 @@ export const ResetPassword = () => {
       <div className="w-full max-w-md p-8 relative z-10">
         <div className="mb-10 text-center">
           <Link to="/" className="inline-flex items-center justify-center gap-2 mb-8">
-            <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center border border-white/20 backdrop-blur-md">
+            <div className="w-10 h-10 bg-card/10 rounded-xl flex items-center justify-center border border-white/20 backdrop-blur-md">
               <span className="text-white font-bold text-xl">I</span>
             </div>
           </Link>
@@ -51,7 +51,7 @@ export const ResetPassword = () => {
           <p className="text-white/60">Your new password must be different.</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
+        <form onSubmit={handleSubmit(onSubmit)} className="bg-card/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
           <div className="space-y-5">
             <div>
               <label className="block text-sm font-medium text-white/80 mb-2">Reset Token</label>
@@ -89,7 +89,7 @@ export const ResetPassword = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-8 w-full flex items-center justify-center gap-2 bg-white text-primary py-3 px-4 rounded-xl font-medium hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+            className="mt-8 w-full flex items-center justify-center gap-2 bg-card text-primary py-3 px-4 rounded-xl font-medium hover:bg-card/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary focus:ring-white transition-all disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {isSubmitting ? (
               <Loader2 className="w-5 h-5 animate-spin" />

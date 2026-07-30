@@ -30,7 +30,7 @@ export const ReportsOverview = () => {
     return <div className="flex justify-center py-20"><Activity className="w-8 h-8 text-indigo-500 animate-spin" /></div>;
   }
 
-  if (!data) return <div className="text-center py-20 text-gray-500">No analytics data available.</div>;
+  if (!data) return <div className="text-center py-20 text-text-secondary">No analytics data available.</div>;
 
   const stats = [
     { label: 'Total Interviews', value: data.totalInterviews, icon: Video, color: 'text-indigo-600', bg: 'bg-indigo-100' },
@@ -59,7 +59,7 @@ export const ReportsOverview = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
-            className="bg-white border border-border rounded-2xl p-5 shadow-sm"
+            className="bg-card border border-border rounded-2xl p-5 shadow-sm"
           >
             <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center mb-3", stat.bg)}>
               <stat.icon className={cn("w-5 h-5", stat.color)} />
@@ -72,7 +72,7 @@ export const ReportsOverview = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Radar Chart */}
-        <div className="lg:col-span-1 bg-white border border-border rounded-2xl p-6 shadow-sm">
+        <div className="lg:col-span-1 bg-card border border-border rounded-2xl p-6 shadow-sm">
           <h2 className="text-lg font-bold text-primary mb-6">Aggregate Skill Profile</h2>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -132,7 +132,7 @@ export const ReportsOverview = () => {
             </h3>
             <div className="flex flex-wrap gap-3">
               {data.achievements?.length > 0 ? data.achievements.map((ach: string, i: number) => (
-                <div key={i} className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-indigo-200 shadow-sm">
+                <div key={i} className="flex items-center gap-2 bg-card px-4 py-2 rounded-full border border-indigo-200 shadow-sm">
                   <span className="text-lg">🏅</span>
                   <span className="text-sm font-bold text-indigo-900">{ach}</span>
                 </div>

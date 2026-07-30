@@ -20,8 +20,28 @@ export const CodingDashboard = () => {
     const fetchDashboard = async () => {
       try {
         const { data } = await api.get('/coding/history');
-        setHistory(data.history);
-        setStats(data.stats);
+        
+        const historyList = Array.isArray(data) ? data : (data.history || []);
+        setHistory(historyList);
+        
+        if (!Array.isArray(data) && data.stats) {
+          setStats(data.stats);
+        } else {
+          const langs = historyList.map((s: any) => s.language).filter(Boolean);
+          const favLang = langs.length 
+            ? langs.sort((a: any, b: any) => langs.filter((v: any) => v===a).length - langs.filter((v: any) => v===b).length).pop() 
+            : 'None';
+            
+          const scores = historyList.map((s: any) => s.review?.overallScore || s.score || 0).filter(Boolean);
+          const avgScore = scores.length ? Math.round(scores.reduce((a:any, b:any) => a + b, 0) / scores.length) : 0;
+          
+          setStats({
+            interviewsCompleted: historyList.length,
+            problemsSolved: historyList.filter((s: any) => s.status === 'Accepted' || s.status === 'completed').length,
+            averageScore: avgScore,
+            favoriteLanguage: favLang as string
+          });
+        }
       } catch (error) {
         console.error('Failed to fetch coding dashboard:', error);
       } finally {
@@ -53,7 +73,7 @@ export const CodingDashboard = () => {
   return (
     <div className="max-w-7xl mx-auto space-y-8">
       {/* Hero Section */}
-      <div className="bg-white/40 backdrop-blur-xl rounded-3xl p-8 border border-white/50 shadow-xl overflow-hidden relative">
+      <div className="bg-card/40 backdrop-blur-xl rounded-3xl p-8 border border-white/50 shadow-xl overflow-hidden relative">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
         
         <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -71,7 +91,7 @@ export const CodingDashboard = () => {
             
             <button 
               onClick={() => navigate('/dashboard/coding/setup')}
-              className="px-8 py-4 bg-primary text-white rounded-2xl font-bold flex items-center gap-3 hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25 hover:-translate-y-1 group"
+              className="px-8 py-4 bg-primary text-background rounded-2xl font-bold flex items-center gap-3 hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25 hover:-translate-y-1 group"
             >
               Start Coding Interview
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -79,7 +99,7 @@ export const CodingDashboard = () => {
           </div>
           
           <div className="hidden md:flex flex-col gap-4">
-            <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 rotate-3 transform-gpu">
+            <div className="bg-card p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 rotate-3 transform-gpu">
               <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500">
                 <Code className="w-6 h-6" />
               </div>
@@ -88,7 +108,7 @@ export const CodingDashboard = () => {
                 <p className="font-bold text-slate-800">JS, Python, Java, C++</p>
               </div>
             </div>
-            <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 -rotate-2 transform-gpu">
+            <div className="bg-card p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 -rotate-2 transform-gpu">
               <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-purple-500">
                 <Target className="w-6 h-6" />
               </div>
@@ -109,7 +129,7 @@ export const CodingDashboard = () => {
           { label: 'Average Score', value: loading ? '-' : `${stats?.averageScore || 0}%`, icon: Activity, color: 'text-purple-500', bg: 'bg-purple-50' },
           { label: 'Favorite Language', value: loading ? '-' : stats?.favoriteLanguage || 'None', icon: Code2, color: 'text-orange-500', bg: 'bg-orange-50' }
         ].map((stat, i) => (
-          <div key={i} className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4">
+          <div key={i} className="bg-card p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-4">
             <div className={`w-14 h-14 rounded-2xl ${stat.bg} flex items-center justify-center ${stat.color}`}>
               <stat.icon className="w-7 h-7" />
             </div>
@@ -122,7 +142,7 @@ export const CodingDashboard = () => {
       </div>
 
       {/* History Section */}
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden flex flex-col">
+      <div className="bg-card rounded-3xl border border-slate-100 shadow-sm overflow-hidden flex flex-col">
         <div className="p-6 border-b border-slate-100 flex items-center justify-between">
           <h2 className="text-xl font-bold text-slate-800">Previous Coding Sessions</h2>
         </div>
@@ -173,7 +193,7 @@ export const CodingDashboard = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-slate-600 truncate max-w-[200px]">
-                      {session.topics.join(', ')}
+                      {(session.topics || session.questionId?.topics || []).join(', ')}
                     </td>
                     <td className="px-6 py-4 text-slate-600 font-medium">
                       {session.numberOfQuestions} Qs

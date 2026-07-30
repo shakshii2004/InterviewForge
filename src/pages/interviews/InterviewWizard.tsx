@@ -93,7 +93,7 @@ export const InterviewWizard = () => {
             <p className="text-text-secondary">Be specific (e.g. Frontend Engineer, Product Manager)</p>
             <input 
               type="text" 
-              className="w-full bg-white border border-border rounded-xl px-4 py-3 text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+              className="w-full bg-card border border-border rounded-xl px-4 py-3 text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
               placeholder="e.g. Senior Full Stack Engineer"
               value={formData.role}
               onChange={(e) => setFormData({ ...formData, role: e.target.value })}
@@ -114,7 +114,7 @@ export const InterviewWizard = () => {
                     "p-4 rounded-xl border-2 text-left transition-all",
                     formData.experienceLevel === exp 
                       ? "border-primary bg-primary/5 text-primary" 
-                      : "border-border hover:border-gray-300 text-text-secondary hover:text-primary"
+                      : "border-border hover:border-border text-text-secondary hover:text-primary"
                   )}
                 >
                   <span className="font-semibold block">{exp}</span>
@@ -136,7 +136,7 @@ export const InterviewWizard = () => {
                     "p-4 rounded-xl border-2 text-left transition-all",
                     formData.interviewType === type 
                       ? "border-primary bg-primary/5 text-primary" 
-                      : "border-border hover:border-gray-300 text-text-secondary hover:text-primary"
+                      : "border-border hover:border-border text-text-secondary hover:text-primary"
                   )}
                 >
                   <span className="font-semibold block">{type}</span>
@@ -158,7 +158,7 @@ export const InterviewWizard = () => {
                     "p-4 rounded-xl border-2 text-left transition-all flex items-center justify-between",
                     formData.difficulty === diff 
                       ? "border-primary bg-primary/5 text-primary" 
-                      : "border-border hover:border-gray-300 text-text-secondary hover:text-primary"
+                      : "border-border hover:border-border text-text-secondary hover:text-primary"
                   )}
                 >
                   <span className="font-semibold block">{diff}</span>
@@ -180,7 +180,7 @@ export const InterviewWizard = () => {
                     "p-4 rounded-xl border-2 text-center transition-all",
                     formData.duration === dur 
                       ? "border-primary bg-primary/5 text-primary" 
-                      : "border-border hover:border-gray-300 text-text-secondary hover:text-primary"
+                      : "border-border hover:border-border text-text-secondary hover:text-primary"
                   )}
                 >
                   <span className="font-semibold block text-xl">{dur} min</span>
@@ -193,24 +193,24 @@ export const InterviewWizard = () => {
         return (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-primary">Review your Interview Setup</h2>
-            <div className="bg-gray-50 rounded-2xl p-6 space-y-4 border border-border">
-              <div className="flex justify-between items-center pb-4 border-b border-gray-200">
+            <div className="bg-background rounded-2xl p-6 space-y-4 border border-border">
+              <div className="flex justify-between items-center pb-4 border-b border-border">
                 <span className="text-text-secondary font-medium">Role</span>
                 <span className="text-primary font-bold">{formData.role}</span>
               </div>
-              <div className="flex justify-between items-center pb-4 border-b border-gray-200">
+              <div className="flex justify-between items-center pb-4 border-b border-border">
                 <span className="text-text-secondary font-medium">Experience</span>
                 <span className="text-primary font-bold">{formData.experienceLevel}</span>
               </div>
-              <div className="flex justify-between items-center pb-4 border-b border-gray-200">
+              <div className="flex justify-between items-center pb-4 border-b border-border">
                 <span className="text-text-secondary font-medium">Type</span>
                 <span className="text-primary font-bold">{formData.interviewType}</span>
               </div>
-              <div className="flex justify-between items-center pb-4 border-b border-gray-200">
+              <div className="flex justify-between items-center pb-4 border-b border-border">
                 <span className="text-text-secondary font-medium">Difficulty</span>
                 <span className="text-primary font-bold">{formData.difficulty}</span>
               </div>
-              <div className="flex justify-between items-center pb-4 border-b border-gray-200">
+              <div className="flex justify-between items-center pb-4 border-b border-border">
                 <span className="text-text-secondary font-medium">Duration</span>
                 <span className="text-primary font-bold">{formData.duration} minutes</span>
               </div>
@@ -243,7 +243,7 @@ export const InterviewWizard = () => {
       {/* Progress Indicator */}
       <div className="mb-12">
         <div className="flex items-center justify-between relative">
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-gray-100 rounded-full -z-10" />
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-background rounded-full -z-10" />
           <div 
             className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-primary rounded-full -z-10 transition-all duration-500 ease-in-out" 
             style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }}
@@ -256,9 +256,9 @@ export const InterviewWizard = () => {
                 <div 
                   className={cn(
                     "w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 border-2",
-                    isCompleted ? "bg-primary border-primary text-white" : 
-                    isCurrent ? "bg-white border-primary text-primary shadow-[0_0_0_4px_rgba(15,23,42,0.1)]" : 
-                    "bg-white border-gray-200 text-gray-400"
+                    isCompleted ? "bg-primary border-primary text-background" : 
+                    isCurrent ? "bg-card border-primary text-primary shadow-[0_0_0_4px_rgba(15,23,42,0.1)]" : 
+                    "bg-card border-border text-gray-400"
                   )}
                 >
                   <s.icon className="w-5 h-5" />
@@ -273,7 +273,7 @@ export const InterviewWizard = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-3xl border border-border shadow-xl p-8 md:p-12 min-h-[400px] flex flex-col">
+      <div className="bg-card rounded-3xl border border-border shadow-xl p-8 md:p-12 min-h-[400px] flex flex-col">
         <div className="flex-1">
           <AnimatePresence mode="wait">
             <motion.div

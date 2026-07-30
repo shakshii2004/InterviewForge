@@ -120,7 +120,7 @@ export const Resume = () => {
       {!resumeData && (
         <div 
           className={cn(
-            "bg-white border-2 border-dashed rounded-2xl p-12 text-center transition-all",
+            "bg-card border-2 border-dashed rounded-2xl p-12 text-center transition-all",
             isDragging ? "border-accent bg-accent/5" : "border-border hover:border-gray-400",
             isUploading ? "pointer-events-none opacity-80" : ""
           )}
@@ -153,7 +153,7 @@ export const Resume = () => {
             <div className="max-w-md mx-auto">
               <h3 className="text-xl font-bold text-primary mb-2">Extracting Text...</h3>
               <p className="text-text-secondary mb-4">Our AI is parsing your PDF document.</p>
-              <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-2 w-full bg-background rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-accent transition-all duration-300"
                   style={{ width: `${uploadProgress}%` }}
@@ -174,7 +174,7 @@ export const Resume = () => {
 
       {resumeData && (
         <div className="space-y-6">
-          <div className="bg-white rounded-2xl border border-border shadow-sm p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="bg-card rounded-2xl border border-border shadow-sm p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-4 w-full">
               <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-accent shrink-0">
                 <FileText className="w-6 h-6" />
@@ -209,8 +209,8 @@ export const Resume = () => {
             />
           </div>
 
-          <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col">
-            <div className="bg-gray-50 border-b border-border p-4 flex items-center gap-2">
+          <div className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden flex flex-col">
+            <div className="bg-background border-b border-border p-4 flex items-center gap-2">
               <FileOutput className="w-5 h-5 text-text-secondary" />
               <h3 className="font-bold text-primary text-sm">Extracted Text Content</h3>
               <span className="ml-auto text-xs bg-primary/10 text-primary px-2 py-1 rounded-md font-medium">Debug View</span>

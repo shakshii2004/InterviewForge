@@ -12,6 +12,22 @@ export interface IInterviewSession extends Document {
   currentQuestionIndex: number;
   totalQuestions: number;
   score?: number;
+  
+  // Phase 3.7: Live Interview Fields
+  communicationMode?: 'Text' | 'Voice' | 'Video';
+  transcript?: Array<{
+    speaker: 'AI' | 'User';
+    text: string;
+    timestamp: Date;
+  }>;
+  speechMetrics?: {
+    averageResponseTime: number;
+    wordsPerMinute: number;
+    fillerWords: number;
+    totalSpeakingTime: number;
+  };
+  recordingPath?: string;
+
   startedAt?: Date;
   completedAt?: Date;
   createdAt: Date;
@@ -63,6 +79,25 @@ const interviewSessionSchema = new Schema<IInterviewSession>({
   score: {
     type: Number
   },
+  
+  communicationMode: {
+    type: String,
+    enum: ['Text', 'Voice', 'Video'],
+    default: 'Text'
+  },
+  transcript: [{
+    speaker: { type: String, enum: ['AI', 'User'] },
+    text: { type: String },
+    timestamp: { type: Date, default: Date.now }
+  }],
+  speechMetrics: {
+    averageResponseTime: { type: Number },
+    wordsPerMinute: { type: Number },
+    fillerWords: { type: Number },
+    totalSpeakingTime: { type: Number }
+  },
+  recordingPath: { type: String },
+
   startedAt: {
     type: Date
   },

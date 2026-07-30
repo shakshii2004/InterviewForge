@@ -21,7 +21,7 @@ const passwordSchema = z.object({
 type PasswordFormData = z.infer<typeof passwordSchema>;
 
 export const Settings = () => {
-  const { logout } = useAuth();
+  const { logout, updateUser } = useAuth();
   const [theme, setTheme] = useState('light'); // default to light since UI is light
   const [notifications, setNotifications] = useState(true);
   const [isSavingPrefs, setIsSavingPrefs] = useState(false);
@@ -46,10 +46,20 @@ export const Settings = () => {
     fetchPrefs();
   }, []);
 
+  // Instant preview effect
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
   const savePreferences = async () => {
     setIsSavingPrefs(true);
     try {
       await api.put('/profile/preferences', { theme, emailNotifications: notifications });
+      updateUser({ preferences: { theme, emailNotifications: notifications } });
       toast.success('Preferences saved successfully!');
     } catch (error) {
       toast.error('Failed to save preferences');
@@ -86,8 +96,8 @@ export const Settings = () => {
       <div className="space-y-6">
         
         {/* Security Section */}
-        <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
-          <div className="p-6 border-b border-border bg-gray-50 flex items-center gap-3">
+        <div className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
+          <div className="p-6 border-b border-border bg-background flex items-center gap-3">
             <Key className="w-5 h-5 text-accent" />
             <h2 className="text-lg font-bold text-primary">Security</h2>
           </div>
@@ -98,7 +108,7 @@ export const Settings = () => {
               <input 
                 {...register('currentPassword')}
                 type="password" 
-                className="w-full max-w-md px-4 py-2 bg-gray-50 border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+                className="w-full max-w-md px-4 py-2 bg-background border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
               />
               {errors.currentPassword && <p className="mt-1 text-sm text-error">{errors.currentPassword.message}</p>}
             </div>
@@ -108,7 +118,7 @@ export const Settings = () => {
               <input 
                 {...register('newPassword')}
                 type="password" 
-                className="w-full max-w-md px-4 py-2 bg-gray-50 border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+                className="w-full max-w-md px-4 py-2 bg-background border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
               />
               {errors.newPassword && <p className="mt-1 text-sm text-error">{errors.newPassword.message}</p>}
             </div>
@@ -118,7 +128,7 @@ export const Settings = () => {
               <input 
                 {...register('confirmPassword')}
                 type="password" 
-                className="w-full max-w-md px-4 py-2 bg-gray-50 border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+                className="w-full max-w-md px-4 py-2 bg-background border border-border rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent transition-all"
               />
               {errors.confirmPassword && <p className="mt-1 text-sm text-error">{errors.confirmPassword.message}</p>}
             </div>
@@ -132,8 +142,8 @@ export const Settings = () => {
         </div>
 
         {/* Preferences Section */}
-        <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
-          <div className="p-6 border-b border-border bg-gray-50 flex items-center gap-3">
+        <div className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
+          <div className="p-6 border-b border-border bg-background flex items-center gap-3">
             <Palette className="w-5 h-5 text-accent" />
             <h2 className="text-lg font-bold text-primary">App Preferences</h2>
           </div>
@@ -151,7 +161,7 @@ export const Settings = () => {
                       "px-6 py-2 rounded-lg border text-sm font-medium transition-all capitalize",
                       theme === t 
                         ? "border-accent bg-accent/10 text-accent shadow-sm" 
-                        : "border-border text-text-secondary hover:border-gray-300 bg-white"
+                        : "border-border text-text-secondary hover:border-border bg-card"
                     )}
                   >
                     {t}
@@ -176,10 +186,10 @@ export const Settings = () => {
                   />
                   <div className={cn(
                     "block w-12 h-6 rounded-full transition-colors",
-                    notifications ? "bg-accent" : "bg-gray-300"
+                    notifications ? "bg-accent" : "bg-border"
                   )}></div>
                   <div className={cn(
-                    "dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform",
+                    "dot absolute left-1 top-1 bg-card w-4 h-4 rounded-full transition-transform",
                     notifications ? "transform translate-x-6" : ""
                   )}></div>
                 </div>
@@ -199,7 +209,7 @@ export const Settings = () => {
         </div>
 
         {/* Danger Zone */}
-        <div className="bg-white rounded-2xl border border-error/20 shadow-sm overflow-hidden">
+        <div className="bg-card rounded-2xl border border-error/20 shadow-sm overflow-hidden">
           <div className="p-6 border-b border-error/10 bg-error/5 flex items-center gap-3">
             <LogOut className="w-5 h-5 text-error" />
             <h2 className="text-lg font-bold text-error">Danger Zone</h2>

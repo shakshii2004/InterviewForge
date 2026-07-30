@@ -223,7 +223,7 @@ export function Evaluation() {
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-emerald-950/20 border border-emerald-500/20 rounded-3xl p-6">
                 <h4 className="text-lg font-semibold text-emerald-400 mb-4 flex items-center gap-2"><CheckCircle className="w-5 h-5"/> Key Strengths</h4>
                 <ul className="space-y-3">
-                  {evalData.strengths.map((s, i) => (
+                  {(evalData.strengths || []).map((s, i) => (
                     <li key={i} className="flex items-start gap-3 text-slate-300">
                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0" />
                       <span>{s}</span>
@@ -235,7 +235,7 @@ export function Evaluation() {
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-amber-950/20 border border-amber-500/20 rounded-3xl p-6">
                 <h4 className="text-lg font-semibold text-amber-400 mb-4 flex items-center gap-2"><AlertTriangle className="w-5 h-5"/> Areas to Improve</h4>
                 <ul className="space-y-3">
-                  {evalData.improvements.map((s, i) => (
+                  {(evalData.improvements || []).map((s, i) => (
                     <li key={i} className="flex items-start gap-3 text-slate-300">
                       <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2 shrink-0" />
                       <span>{s}</span>
@@ -248,7 +248,7 @@ export function Evaluation() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-slate-900 border border-white/10 rounded-3xl p-8">
                 <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2"><BookOpen className="w-5 h-5 text-indigo-400"/> Recommended Topics to Review</h4>
                 <div className="flex flex-wrap gap-3">
-                  {evalData.recommendedTopics.map((t, i) => (
+                  {(evalData.recommendedTopics || []).map((t, i) => (
                     <span key={i} className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-full text-indigo-300 font-medium">{t}</span>
                   ))}
                 </div>
@@ -259,9 +259,9 @@ export function Evaluation() {
         {/* Detailed Question Review */}
         <div className="pt-8 space-y-4">
           <h2 className="text-2xl font-bold text-white mb-6">Detailed Question Analysis</h2>
-          {questions.map((q, index) => {
-            const ans = answers.find(a => a.questionId === q._id);
-            const qFeedback = evalData.questionFeedback.find(qf => qf.questionId === q._id);
+          {(questions || []).map((q, index) => {
+            const ans = (answers || []).find(a => a.questionId === q._id);
+            const qFeedback = (evalData.questionFeedback || []).find(qf => qf.questionId === q._id);
             const isExpanded = expandedId === q._id;
             
             return (
@@ -269,7 +269,7 @@ export function Evaluation() {
                 key={q._id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + index * 0.1 }}
                 className="bg-slate-900 border border-white/5 rounded-2xl overflow-hidden"
               >
-                <button onClick={() => setExpandedId(isExpanded ? null : q._id)} className="w-full p-6 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors">
+                <button onClick={() => setExpandedId(isExpanded ? null : q._id)} className="w-full p-6 flex items-center justify-between text-left hover:bg-card/[0.02] transition-colors">
                   <div className="flex-1 pr-4">
                     <span className="text-xs font-semibold text-indigo-400 tracking-wider uppercase mb-2 block">Question {index + 1} &bull; {q.category}</span>
                     <h3 className="text-lg text-white font-medium leading-relaxed">{q.question}</h3>
@@ -304,7 +304,7 @@ export function Evaluation() {
                           </div>
                         )}
 
-                        {qFeedback && (qFeedback.strengths.length > 0 || qFeedback.missingPoints.length > 0) && (
+                        {qFeedback && ((qFeedback.strengths && qFeedback.strengths.length > 0) || (qFeedback.missingPoints && qFeedback.missingPoints.length > 0)) && (
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {qFeedback.strengths.length > 0 && (
                               <div className="bg-emerald-950/10 p-4 rounded-xl border border-emerald-500/10">
@@ -314,7 +314,7 @@ export function Evaluation() {
                                 </ul>
                               </div>
                             )}
-                            {qFeedback.missingPoints.length > 0 && (
+                            {qFeedback.missingPoints && qFeedback.missingPoints.length > 0 && (
                               <div className="bg-amber-950/10 p-4 rounded-xl border border-amber-500/10">
                                 <h5 className="text-amber-400 text-sm font-semibold mb-2">What was missing:</h5>
                                 <ul className="list-disc list-inside text-slate-300 text-sm space-y-1">

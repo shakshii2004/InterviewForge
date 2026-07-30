@@ -29,7 +29,7 @@ export const CodingSession = () => {
   if (loading) {
     return (
       <div className="h-screen w-full flex flex-col items-center justify-center bg-slate-50">
-        <div className="w-16 h-16 rounded-2xl bg-white shadow-xl shadow-primary/10 flex items-center justify-center mb-6 border border-slate-100 animate-pulse">
+        <div className="w-16 h-16 rounded-2xl bg-card shadow-xl shadow-primary/10 flex items-center justify-center mb-6 border border-slate-100 animate-pulse">
           <Code2 className="w-8 h-8 text-primary" />
         </div>
         <p className="text-slate-500 font-medium animate-pulse">Preparing Workspace...</p>
@@ -40,7 +40,7 @@ export const CodingSession = () => {
   if (error || !session) {
     return (
       <div className="h-screen w-full flex flex-col items-center justify-center bg-slate-50">
-        <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl max-w-md text-center">
+        <div className="bg-card p-8 rounded-3xl border border-slate-100 shadow-xl max-w-md text-center">
           <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
             <Code2 className="w-8 h-8 text-red-500" />
           </div>
@@ -48,7 +48,7 @@ export const CodingSession = () => {
           <p className="text-slate-500 mb-8">{error || 'Session not found'}</p>
           <button 
             onClick={() => navigate('/dashboard/coding')}
-            className="px-6 py-2.5 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-colors w-full"
+            className="px-6 py-2.5 bg-primary text-background font-bold rounded-xl hover:bg-primary/90 transition-colors w-full"
           >
             Return to Dashboard
           </button>
