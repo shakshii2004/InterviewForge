@@ -11,7 +11,7 @@ const upload = multer({
   limits: {
     fileSize: 5 * 1024 * 1024 // 5MB limit
   },
-  fileFilter: (req, file, cb) => {
+  fileFilter: (req: express.Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
     if (file.mimetype === 'application/pdf') {
       cb(null, true);
     } else {

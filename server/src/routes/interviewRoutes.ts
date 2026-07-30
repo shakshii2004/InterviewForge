@@ -41,8 +41,8 @@ router.post('/:id/next', nextQuestion);
 router.post('/:id/finish', finishInterview);
 router.post('/:id/evaluate', evaluateSession);
 // Pause and Resume endpoints can be implemented as frontend state, but we provide stubs if needed.
-router.post('/:id/pause', (req, res) => { res.json({success:true}) });
-router.post('/:id/resume', (req, res) => { res.json({success:true}) });
+router.post('/:id/pause', (req: express.Request, res: express.Response) => { res.json({success:true}) });
+router.post('/:id/resume', (req: express.Request, res: express.Response) => { res.json({success:true}) });
 
 
 

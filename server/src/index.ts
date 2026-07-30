@@ -51,7 +51,7 @@ app.use('/api/reports', analyticsRoutes);
 app.use('/api/coding', codingRoutes);
 
 // Health check route
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (req: express.Request, res: express.Response) => {
   res.status(200).json({ status: 'ok', message: 'Server is running' });
 });
 
