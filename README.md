@@ -1,6 +1,6 @@
 # InterviewForge
 
-A modern AI-powered interview preparation platform.
+A robust, full-stack AI-powered interview preparation platform designed to help software engineers ace technical and behavioral interviews through interactive mock sessions, secure remote code execution, and personalized learning roadmaps.
 
 🚀 **Live Demo:** [https://interview-forge-wine.vercel.app](https://interview-forge-wine.vercel.app)
 
