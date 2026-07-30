@@ -25,6 +25,11 @@ The following features have been successfully completed:
 - **Phase 2.4**: AI Evaluation Engine. Generates comprehensive post-interview feedback and analytics (Radar charts, strengths, areas for improvement) using a dedicated Evaluation schema, with PDF export capabilities.
 - **Phase 2.5**: Reports & Analytics Module. Comprehensive user analytics tracking aggregate scores, practice streaks, and skill trajectories over time. Includes an interactive interview history table with CSV exporting, and dynamically updating Recharts components.
 
+## Recent Hotfixes
+
+- Fixed an issue where the mock AI Engine would return duplicate questions during a single interview session.
+- Fixed a race condition (E11000 Duplicate Key Error) in the Evaluation Engine caused by React Strict Mode double-mounting during development.
+
 ## Tech Stack
 
 **Frontend:**

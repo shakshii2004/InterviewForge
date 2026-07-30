@@ -109,17 +109,26 @@ export const evaluationService = {
       }) || []
     });
 
-    await evaluation.save();
-    
-    // Update the session score as well for quick access
-    session.score = evaluation.overallScore;
-    await session.save();
-    
-    // Sync UserAnalytics
-    const { analyticsService } = await import('../analyticsService');
-    await analyticsService.syncUserAnalytics(userId);
+    try {
+      await evaluation.save();
+      
+      // Update the session score as well for quick access
+      session.score = evaluation.overallScore;
+      await session.save();
+      
+      // Sync UserAnalytics
+      const { analyticsService } = await import('../analyticsService');
+      await analyticsService.syncUserAnalytics(userId);
 
-    return evaluation;
+      return evaluation;
+    } catch (error: any) {
+      if (error.code === 11000) {
+        // Race condition: another request just created this evaluation.
+        const existing = await Evaluation.findOne({ interviewId, userId });
+        if (existing) return existing;
+      }
+      throw error;
+    }
   },
 
   async getEvaluation(interviewId: string, userId: string) {
