@@ -21,6 +21,23 @@ connectDB();
 
 const app = express();
 
+// Configure CORS
+const corsOptions = {
+  origin: [
+    'https://interview-forge-wine.vercel.app',
+    'http://localhost:5173',
+    process.env.FRONTEND_URL || ''
+  ].filter(Boolean),
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 204
+};
+
+// MUST be before any other middleware or routes to handle preflight correctly
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 // Middleware
 app.use(helmet());
 app.use(compression());
@@ -33,10 +50,6 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173', 
-  credentials: true
-}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
