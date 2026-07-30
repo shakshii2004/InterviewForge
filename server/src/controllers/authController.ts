@@ -16,6 +16,8 @@ const generateTokenAndSetCookie = (res: Response, userId: string) => {
     sameSite: 'strict',
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
+  
+  return token;
 };
 
 // @desc    Register a new user
@@ -51,9 +53,10 @@ export const registerUser = async (req: Request, res: Response) => {
     });
 
     if (user) {
-      generateTokenAndSetCookie(res, user._id.toString());
+      const token = generateTokenAndSetCookie(res, user._id.toString());
       res.status(201).json({
         success: true,
+        token,
         user: {
           _id: user._id,
           name: user.name,
@@ -93,9 +96,10 @@ export const loginUser = async (req: Request, res: Response) => {
       return res.status(401).json({ success: false, message: 'Incorrect password.' });
     }
 
-    generateTokenAndSetCookie(res, user._id.toString());
+    const token = generateTokenAndSetCookie(res, user._id.toString());
     res.json({
       success: true,
+      token,
       user: {
         _id: user._id,
         name: user.name,
@@ -244,10 +248,11 @@ export const googleSignIn = async (req: Request, res: Response) => {
     }
 
     // Generate JWT and set cookie
-    generateTokenAndSetCookie(res, user._id.toString());
+    const backendToken = generateTokenAndSetCookie(res, user._id.toString());
     
     res.status(200).json({
       success: true,
+      token: backendToken,
       user: {
         _id: user._id,
         name: user.name,

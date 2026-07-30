@@ -26,7 +26,7 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (userData: User) => void;
+  login: (userData: User, token?: string) => void;
   logout: () => Promise<void>;
   loginWithGoogle: () => Promise<void>;
   updateUser: (updates: Partial<User>) => void;
@@ -65,7 +65,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [user?.preferences?.theme]);
 
-  const login = (userData: User) => {
+  const login = (userData: User, token?: string) => {
+    if (token) {
+      localStorage.setItem('token', token);
+    }
     setUser(userData);
   };
 
@@ -76,9 +79,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     try {
       await api.post('/auth/logout');
-      setUser(null);
     } catch (error) {
       console.error('Logout failed', error);
+    } finally {
+      localStorage.removeItem('token');
+      setUser(null);
     }
   };
 
@@ -93,6 +98,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
       
       if (response.data.success) {
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
         setUser(response.data.user);
         toast.success('Signed in with Google!');
       }
