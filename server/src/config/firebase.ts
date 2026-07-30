@@ -6,12 +6,17 @@ dotenv.config();
 // Initialize Firebase Admin only once
 if (!getApps().length) {
   try {
-    const serviceAccount = {
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      // Handle escaped newlines in the private key string
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    };
+      let privateKey = process.env.FIREBASE_PRIVATE_KEY;
+      if (privateKey && privateKey.startsWith('"') && privateKey.endsWith('"')) {
+        privateKey = privateKey.slice(1, -1);
+      }
+      privateKey = privateKey?.replace(/\\n/g, '\n');
+
+      const serviceAccount = {
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+        privateKey,
+      };
 
     initializeApp({
       credential: cert(serviceAccount),

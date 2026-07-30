@@ -201,7 +201,12 @@ export const resetPassword = async (req: Request, res: Response) => {
 // @access  Public
 export const googleSignIn = async (req: Request, res: Response) => {
   try {
-    const { token } = req.body;
+    let token = req.body.token;
+    
+    // Check Authorization header for Bearer token
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
     
     if (!token) {
       return res.status(400).json({ success: false, message: 'No Google token provided' });
@@ -254,7 +259,7 @@ export const googleSignIn = async (req: Request, res: Response) => {
     });
 
   } catch (error: any) {
-    console.error('Google Sign-In Error:', error);
-    res.status(401).json({ success: false, message: 'Invalid Google token' });
+    console.error('Google Sign-In Error:', error.message || error);
+    res.status(401).json({ success: false, message: 'Invalid Google token: ' + (error.message || 'Verification failed') });
   }
 };

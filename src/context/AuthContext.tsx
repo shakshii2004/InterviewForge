@@ -86,8 +86,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const idToken = await result.user.getIdToken();
-      
-      const response = await api.post('/auth/google', { token: idToken });
+      const response = await api.post('/auth/google', {}, {
+        headers: {
+          Authorization: `Bearer ${idToken}`
+        }
+      });
       
       if (response.data.success) {
         setUser(response.data.user);
