@@ -48,7 +48,7 @@ export const InterviewSession = () => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'error'>('saved');
 
-  const saveTimeoutRef = useRef<NodeJS.Timeout>();
+  const saveTimeoutRef = useRef<any>(null);
 
   // Fetch Session Data
   const loadSession = async () => {
@@ -285,7 +285,7 @@ export const InterviewSession = () => {
           </div>
           
           <div className="mt-auto">
-            <Button variant="outline" className="w-full text-error border-error/20 hover:bg-error/5 hover:border-error/30" onClick={handleFinish}>
+            <Button className="w-full text-error border-error/20 hover:bg-error/5 hover:border-error/30" onClick={handleFinish}>
               End Early
             </Button>
           </div>

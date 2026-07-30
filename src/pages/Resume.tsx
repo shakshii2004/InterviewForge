@@ -191,7 +191,7 @@ export const Resume = () => {
               <Button variant="secondary" onClick={() => fileInputRef.current?.click()} className="flex-1 sm:flex-none">
                 Replace
               </Button>
-              <Button variant="outline" className="text-error border-error/20 hover:bg-error/5 flex-1 sm:flex-none" onClick={handleDelete}>
+              <Button className="text-error border-error/20 hover:bg-error/5 flex-1 sm:flex-none" onClick={handleDelete}>
                 <Trash2 className="w-4 h-4" />
               </Button>
             </div>

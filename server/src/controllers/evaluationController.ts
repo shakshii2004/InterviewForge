@@ -1,8 +1,7 @@
-import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
+import { Request, Response } from 'express';
 import { evaluationService } from '../services/evaluation/evaluationService';
 
-export const generateEvaluation = async (req: AuthRequest, res: Response): Promise<void> => {
+export const generateEvaluation = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?._id;
     const evaluation = await evaluationService.generateEvaluation(req.params.id as string, userId);
@@ -12,7 +11,7 @@ export const generateEvaluation = async (req: AuthRequest, res: Response): Promi
   }
 };
 
-export const getEvaluation = async (req: AuthRequest, res: Response): Promise<void> => {
+export const getEvaluation = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?._id;
     const evaluation = await evaluationService.getEvaluation(req.params.id as string, userId);
@@ -26,7 +25,7 @@ export const getEvaluation = async (req: AuthRequest, res: Response): Promise<vo
   }
 };
 
-export const deleteEvaluation = async (req: AuthRequest, res: Response): Promise<void> => {
+export const deleteEvaluation = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?._id;
     await evaluationService.deleteEvaluation(req.params.id as string, userId);

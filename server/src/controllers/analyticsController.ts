@@ -1,8 +1,7 @@
-import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
+import { Request, Response } from 'express';
 import { analyticsService } from '../services/analyticsService';
 
-export const getDashboardAnalytics = async (req: AuthRequest, res: Response): Promise<void> => {
+export const getDashboardAnalytics = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?._id;
     const data = await analyticsService.getDashboard(userId);
@@ -12,7 +11,7 @@ export const getDashboardAnalytics = async (req: AuthRequest, res: Response): Pr
   }
 };
 
-export const getInterviewHistory = async (req: AuthRequest, res: Response): Promise<void> => {
+export const getInterviewHistory = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?._id;
     const history = await analyticsService.getHistory(userId);
@@ -22,7 +21,7 @@ export const getInterviewHistory = async (req: AuthRequest, res: Response): Prom
   }
 };
 
-export const getProgressTimeline = async (req: AuthRequest, res: Response): Promise<void> => {
+export const getProgressTimeline = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?._id;
     const timeline = await analyticsService.getProgressTimeline(userId);
@@ -32,7 +31,7 @@ export const getProgressTimeline = async (req: AuthRequest, res: Response): Prom
   }
 };
 
-export const deleteHistoryItem = async (req: AuthRequest, res: Response): Promise<void> => {
+export const deleteHistoryItem = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?._id;
     await analyticsService.deleteInterview(req.params.id as string, userId);

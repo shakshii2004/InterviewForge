@@ -13,6 +13,9 @@ import { Resume } from './pages/Resume';
 import { InterviewWizard } from './pages/interviews/InterviewWizard';
 import { InterviewSession } from './pages/interviews/InterviewSession';
 import { Evaluation } from './pages/interviews/Evaluation';
+import { CodingDashboard } from './pages/coding/CodingDashboard';
+import { CodingSetupWizard } from './pages/coding/CodingSetupWizard';
+import { CodingSession } from './pages/coding/CodingSession';
 import { ReportsLayout } from './components/layout/ReportsLayout';
 import { ReportsOverview } from './pages/reports/ReportsOverview';
 import { InterviewHistory } from './pages/reports/InterviewHistory';
@@ -20,6 +23,13 @@ import { SkillAnalytics } from './pages/reports/SkillAnalytics';
 import { ProgressMilestones } from './pages/reports/ProgressMilestones';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { DashboardLayout } from './components/layout/DashboardLayout';
+import { CodeReviewPage } from './pages/coding/review/CodeReviewPage';
+import { CodingAnalyticsDashboard } from './pages/coding/analytics/CodingAnalyticsDashboard';
+import { HistoryPage } from './pages/coding/history/HistoryPage';
+import { CompareAttemptsPage } from './pages/coding/history/CompareAttemptsPage';
+import { PracticeHub } from './pages/coding/practice/PracticeHub';
+import { AssessmentHub } from './pages/coding/assessments/AssessmentHub';
+import { AssessmentWorkspace } from './pages/coding/assessments/AssessmentWorkspace';
 
 function App() {
   return (
@@ -55,9 +65,26 @@ function App() {
                 <Route path="progress" element={<ProgressMilestones />} />
               </Route>
             </Route>
-            {/* The actual interview is outside the dashboard layout (full screen) */}
+            
+            {/* Coding Dashboard & Setup inside dashboard layout */}
+            <Route element={<DashboardLayout />}>
+              <Route path="/dashboard/coding" element={<CodingDashboard />} />
+              <Route path="/dashboard/coding/setup" element={<CodingSetupWizard />} />
+              <Route path="/dashboard/coding/analytics" element={<CodingAnalyticsDashboard />} />
+              <Route path="/dashboard/coding/history" element={<HistoryPage />} />
+              <Route path="/dashboard/coding/history/compare/:questionId" element={<CompareAttemptsPage />} />
+              <Route path="/dashboard/coding/practice" element={<PracticeHub />} />
+              <Route path="/dashboard/coding/assessments" element={<AssessmentHub />} />
+            </Route>
+
+            {/* Full screen sessions */}
+            <Route path="/dashboard/coding/session/:sessionId" element={<CodingSession />} />
+            <Route path="/dashboard/coding/review/:reviewId" element={<CodeReviewPage />} />
+            <Route path="/dashboard/coding/assessment/:assessmentId" element={<AssessmentWorkspace />} />
             <Route path="/interview/:sessionId" element={<InterviewSession />} />
             <Route path="/evaluation/:sessionId" element={<Evaluation />} />
+            <Route path="/coding/session/:sessionId" element={<CodingSession />} />
+            <Route path="/coding/review/:submissionId" element={<CodeReviewPage />} />
           </Route>
         </Routes>
       </Router>

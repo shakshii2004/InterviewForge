@@ -9,6 +9,7 @@ import resumeRoutes from './routes/resumeRoutes';
 import interviewRoutes from './routes/interviewRoutes';
 import evaluationRoutes from './routes/evaluationRoutes';
 import analyticsRoutes from './routes/analyticsRoutes';
+import codingRoutes from './routes/codingRoutes';
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use('/api/resume', resumeRoutes);
 app.use('/api/interviews', interviewRoutes);
 app.use('/api/evaluation', evaluationRoutes);
 app.use('/api/reports', analyticsRoutes);
+app.use('/api/coding', codingRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {

@@ -24,6 +24,10 @@ The following features have been successfully completed:
 - **Phase 2.3**: AI Interview Engine (Core). Features an interactive real-time interview interface where questions are iteratively generated and answered. Includes a mock engine fallback for API rate limit protection.
 - **Phase 2.4**: AI Evaluation Engine. Generates comprehensive post-interview feedback and analytics (Radar charts, strengths, areas for improvement) using a dedicated Evaluation schema, with PDF export capabilities.
 - **Phase 2.5**: Reports & Analytics Module. Comprehensive user analytics tracking aggregate scores, practice streaks, and skill trajectories over time. Includes an interactive interview history table with CSV exporting, and dynamically updating Recharts components.
+- **Phase 3.1 & 3.2**: Coding Workspace & Execution Engine. Integrated the Monaco Editor for a premium browser IDE experience. Implemented a secure backend execution engine using the Piston API to compile, run, and test Python, Java, and C++ code against hidden test cases.
+- **Phase 3.3 & 3.4**: AI Code Review Engine. A senior-level AI pair programmer that provides deep code reviews on algorithm submissions. Analyzes for time/space complexity, edge cases, and design patterns, assigning an overall score out of 100.
+- **Phase 3.5**: Coding Analytics Dashboard. A dedicated dashboard tracking coding performance, solving streaks, topic-specific mastery, and an AI agent that dynamically suggests a personalized study roadmap.
+- **Phase 3.6**: Practice Hub, History & Assessments. A LeetCode-style Practice Hub with advanced problem filtering (Topic, Difficulty, Company). Includes a unified Mock Assessment & Contest engine to run timed multi-question challenges under pressure, and a comprehensive Coding History view featuring a side-by-side "Compare Attempts" tool.
 
 ## Architecture Updates
 
@@ -91,16 +95,18 @@ The frontend will automatically proxy `/api` requests to the local backend on po
 
 ## Roadmap
 
-✅ **Phase 1.1 — Landing Page**
-✅ **Phase 1.2 — Authentication**
-✅ **Phase 1.3 — Dashboard**
-✅ **Phase 2.1 — Resume Intelligence**
-✅ **Phase 2.2 — AI Interview Engine (Wizard)**
-✅ **Phase 2.3 — AI Interview Engine (Core)**
-✅ **Phase 2.4 — AI Evaluation Engine**
-✅ **Phase 2.5 — Reports & Analytics**
-⬜ **Phase 3 — Coding Interview**
-⬜ **Phase 4 — Production Deployment**
+- [x] **Phase 1.1 — Landing Page**
+- [x] **Phase 1.2 — Authentication**
+- [x] **Phase 1.3 — Dashboard**
+- [x] **Phase 2.1 — Resume Intelligence**
+- [x] **Phase 2.2 — AI Interview Engine (Wizard)**
+- [x] **Phase 2.3 — AI Interview Engine (Core)**
+- [x] **Phase 2.4 — AI Evaluation Engine**
+- [x] **Phase 2.5 — Reports & Analytics**
+- [x] **Phase 3.1 & 3.2 — Coding Workspace & Execution**
+- [x] **Phase 3.3 & 3.4 — AI Code Review**
+- [x] **Phase 3.5 & 3.6 — Analytics, Practice Hub & Assessments**
+- [ ] **Phase 4 — Production Deployment**
 
 ## License
 
