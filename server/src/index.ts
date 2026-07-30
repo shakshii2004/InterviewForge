@@ -36,7 +36,6 @@ const corsOptions = {
 
 // MUST be before any other middleware or routes to handle preflight correctly
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
 
 // Middleware
 app.use(helmet());
