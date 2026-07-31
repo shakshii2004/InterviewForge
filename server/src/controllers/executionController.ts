@@ -11,45 +11,8 @@ export const runCode = async (req: Request, res: Response): Promise<void> => {
     // Handle stale frontend states that send dummy_question_id
     if (questionId === 'dummy_question_id') {
       const CodingQuestion = mongoose.model('CodingQuestion');
-      let firstQ = await CodingQuestion.findOne();
-      
-      // Auto-seed if database is completely empty on first production run
-      if (!firstQ) {
-        firstQ = await CodingQuestion.create({
-          title: 'Two Sum',
-          difficulty: 'Easy',
-          description: 'Given an array of integers nums and an integer target...',
-          constraints: ['2 <= nums.length <= 10^4', '-10^9 <= nums[i] <= 10^9', '-10^9 <= target <= 10^9'],
-          topics: ['Arrays', 'Hash Table'],
-          starterCode: {
-            'JavaScript': 'function twoSum(nums, target) {\n  \n}',
-            'Python': 'def twoSum(nums, target):\n  pass',
-            'Java': 'class Solution {\n  public int[] twoSum(int[] nums, int target) {\n    \n  }\n}',
-            'C++': 'class Solution {\npublic:\n  vector<int> twoSum(vector<int>& nums, int target) {\n    \n  }\n};'
-          },
-          signature: {
-            methodName: 'twoSum',
-            parameters: [
-              { name: 'nums', type: 'int[]' },
-              { name: 'target', type: 'int' }
-            ],
-            returnType: 'int[]'
-          },
-          sampleTestCases: [
-            { input: '2 7 11 15\n9', expectedOutput: '0 1' },
-            { input: '3 2 4\n6', expectedOutput: '1 2' }
-          ],
-          hiddenTestCases: [
-            { input: '3 3\n6', expectedOutput: '0 1' },
-            { input: '2 5 5 11\n10', expectedOutput: '1 2' },
-            { input: '-1 -2 -3 -4 -5\n-8', expectedOutput: '2 4' }
-          ],
-          timeLimit: 2,
-          memoryLimit: 128000
-        });
-      }
-      
-      questionId = firstQ._id.toString();
+      const firstQ = await CodingQuestion.findOne();
+      if (firstQ) questionId = firstQ._id.toString();
     }
     
     if (!code || !language || !questionId) {
@@ -79,44 +42,8 @@ export const submitCode = async (req: Request, res: Response): Promise<void> => 
     // Handle stale frontend states that send dummy_question_id
     if (questionId === 'dummy_question_id') {
       const CodingQuestion = mongoose.model('CodingQuestion');
-      let firstQ = await CodingQuestion.findOne();
-      
-      if (!firstQ) {
-        firstQ = await CodingQuestion.create({
-          title: 'Two Sum',
-          difficulty: 'Easy',
-          description: 'Given an array of integers nums and an integer target...',
-          constraints: ['2 <= nums.length <= 10^4', '-10^9 <= nums[i] <= 10^9', '-10^9 <= target <= 10^9'],
-          topics: ['Arrays', 'Hash Table'],
-          starterCode: {
-            'JavaScript': 'function twoSum(nums, target) {\n  \n}',
-            'Python': 'def twoSum(nums, target):\n  pass',
-            'Java': 'class Solution {\n  public int[] twoSum(int[] nums, int target) {\n    \n  }\n}',
-            'C++': 'class Solution {\npublic:\n  vector<int> twoSum(vector<int>& nums, int target) {\n    \n  }\n};'
-          },
-          signature: {
-            methodName: 'twoSum',
-            parameters: [
-              { name: 'nums', type: 'int[]' },
-              { name: 'target', type: 'int' }
-            ],
-            returnType: 'int[]'
-          },
-          sampleTestCases: [
-            { input: '2 7 11 15\n9', expectedOutput: '0 1' },
-            { input: '3 2 4\n6', expectedOutput: '1 2' }
-          ],
-          hiddenTestCases: [
-            { input: '3 3\n6', expectedOutput: '0 1' },
-            { input: '2 5 5 11\n10', expectedOutput: '1 2' },
-            { input: '-1 -2 -3 -4 -5\n-8', expectedOutput: '2 4' }
-          ],
-          timeLimit: 2,
-          memoryLimit: 128000
-        });
-      }
-      
-      questionId = firstQ._id.toString();
+      const firstQ = await CodingQuestion.findOne();
+      if (firstQ) questionId = firstQ._id.toString();
     }
 
     if (!code || !language || !questionId || !sessionId) {

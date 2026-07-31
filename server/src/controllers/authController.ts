@@ -205,10 +205,10 @@ export const resetPassword = async (req: Request, res: Response) => {
 // @access  Public
 export const googleSignIn = async (req: Request, res: Response) => {
   try {
-    let token = req.body.token;
+    let token = req.body.idToken || req.body.token;
     
-    // Check Authorization header for Bearer token
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    // Check Authorization header for Bearer token ONLY if body token is missing
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
       token = req.headers.authorization.split(' ')[1];
     }
     
