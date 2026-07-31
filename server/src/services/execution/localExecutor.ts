@@ -29,9 +29,10 @@ export const localExecutor = {
           const javac = spawn('javac', [sourcePath], { cwd: tempDir });
           let stderr = '';
           javac.stderr.on('data', data => stderr += data);
+          javac.on('error', err => reject(err));
           javac.on('close', code => {
             if (code === 0) resolve();
-            else reject(new Error(stderr));
+            else reject(new Error(stderr || 'Compilation failed'));
           });
         });
       }
@@ -95,6 +96,11 @@ export const localExecutor = {
       proc.stdout.on('data', data => stdout += data);
       proc.stderr.on('data', data => stderr += data);
       
+      proc.on('error', err => {
+        stderr += err.message;
+        resolve({ stdout, stderr, code: 1 });
+      });
+
       proc.on('close', code => {
         resolve({ stdout, stderr, code: code ?? 1 });
       });
