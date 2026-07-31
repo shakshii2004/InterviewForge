@@ -1,26 +1,22 @@
-import { getJudge0LanguageId } from './languageMapper';
-import { judge0Client, SubmissionRequest } from './judge0Client';
-import { parseJudge0Result, ParsedExecutionResult } from './resultParser';
+import { getPistonLanguage } from './languageMapper';
+import { pistonClient } from './pistonClient';
+import { parsePistonResult, ParsedExecutionResult } from './resultParser';
 import { CodeSubmission } from '../../models/CodeSubmission';
 import { CodingQuestion, TestCase } from '../../models/CodingQuestion';
 import mongoose from 'mongoose';
 import { wrapCode } from './codeWrapper';
-import { localExecutor } from './localExecutor';
-
-const POLL_INTERVAL = 1000;
-const MAX_POLL_ATTEMPTS = 20;
 
 export const executionService = {
   async runSampleTests(code: string, language: string, questionId: string): Promise<ParsedExecutionResult[]> {
     const question = await CodingQuestion.findById(questionId);
     if (!question) throw new Error('Question not found');
 
-    const languageId = getJudge0LanguageId(language);
+    const pistonLang = getPistonLanguage(language);
     
     const testCases = question.sampleTestCases;
     if (!testCases || testCases.length === 0) return [];
 
-    return this.executeTestCases(code, language, languageId, testCases, question.signature);
+    return this.executeTestCases(code, language, pistonLang.language, pistonLang.version, testCases, question.signature);
   },
 
   async submitHiddenTests(
@@ -33,10 +29,10 @@ export const executionService = {
     const question = await CodingQuestion.findById(questionId);
     if (!question) throw new Error('Question not found');
 
-    const languageId = getJudge0LanguageId(language);
+    const pistonLang = getPistonLanguage(language);
     
     const testCases = question.hiddenTestCases;
-    const results = await this.executeTestCases(code, language, languageId, testCases, question.signature);
+    const results = await this.executeTestCases(code, language, pistonLang.language, pistonLang.version, testCases, question.signature);
 
     let passedTestCases = 0;
     let maxExecutionTime = 0;
@@ -75,66 +71,46 @@ export const executionService = {
     };
   },
 
-  async executeTestCases(code: string, language: string, languageId: number, testCases: TestCase[], signature: any): Promise<ParsedExecutionResult[]> {
-    const isMock = !process.env.JUDGE0_API_KEY;
-    const wrappedCode = wrapCode(code, language, signature);
-
-    if (isMock) {
-      return await localExecutor.runAll(wrappedCode, language, testCases);
-    }
-
-    const requests: SubmissionRequest[] = testCases.map(tc => ({
-      source_code: wrappedCode,
-      language_id: languageId,
-      stdin: tc.input,
-      expected_output: tc.expectedOutput
-    }));
-
-    // If there's only 1 test case, use single submission for simplicity, else batch.
-    // For safety with free API tiers that might not support batch, we submit sequentially
-    // with a 1-second delay between submissions to avoid HTTP 429 Too Many Requests limits.
-    
-    const tokens: string[] = [];
-    for (const req of requests) {
-      const token = await judge0Client.createSubmission(req);
-      tokens.push(token);
-      await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
-    }
-
-    // Poll sequentially to also avoid rate limits on the GET endpoints
+  async executeTestCases(
+    code: string, 
+    originalLanguage: string, 
+    pistonLangName: string, 
+    pistonLangVersion: string, 
+    testCases: TestCase[], 
+    signature: any
+  ): Promise<ParsedExecutionResult[]> {
+    const wrappedCode = wrapCode(code, originalLanguage, signature);
     const results: ParsedExecutionResult[] = [];
     
-    for (let i = 0; i < tokens.length; i++) {
-      let attempts = 0;
-      let finalResult = null;
-      
-      while (attempts < MAX_POLL_ATTEMPTS) {
-        const status = await judge0Client.getSubmissionStatus(tokens[i]);
-        if (status.status.id > 2) {
-          finalResult = status;
-          break;
-        }
-        await new Promise(r => setTimeout(r, POLL_INTERVAL));
-        attempts++;
-      }
+    // We run each test case sequentially since Piston API execute endpoint does not natively 
+    // support array of stdins for batch runs in a single request.
+    for (const tc of testCases) {
+      try {
+        const response = await pistonClient.execute({
+          language: pistonLangName,
+          version: pistonLangVersion,
+          files: [
+            { content: wrappedCode }
+          ],
+          stdin: tc.input
+        });
 
-      if (finalResult) {
-        results.push(parseJudge0Result(finalResult, testCases[i].expectedOutput));
-      } else {
-        // Timeout
+        results.push(parsePistonResult(response, tc.expectedOutput));
+      } catch (error: any) {
+        console.error(`Piston Execution Error for language ${pistonLangName}:`, error.message);
         results.push({
           status: 'Internal Error',
           output: '',
           passed: false,
           time: 0,
           memory: 0,
-          error: 'Execution timed out'
+          error: error.message || 'Execution failed due to server error'
         });
       }
       
-      // Delay before polling next token
-      if (i < tokens.length - 1) {
-        await new Promise(r => setTimeout(r, 1000));
+      // Sleep slightly between requests to be nice to the public API
+      if (testCases.length > 1) {
+        await new Promise(r => setTimeout(r, 250));
       }
     }
 

@@ -1,20 +1,28 @@
-export const getJudge0LanguageId = (language: string): number => {
+export const getPistonLanguage = (language: string): { language: string, version: string } => {
   const normalizedLanguage = language.toLowerCase();
   
   switch (normalizedLanguage) {
     case 'javascript':
     case 'js':
-      return 63; // JavaScript (Node.js 12.14.0) or 93 (Node.js 18.15.0) - using standard 63 for CE
+      return { language: 'javascript', version: '*' };
     case 'python':
     case 'py':
-      return 71; // Python (3.8.1)
+      return { language: 'python', version: '*' };
     case 'java':
-      return 62; // Java (OpenJDK 13.0.1)
+      return { language: 'java', version: '*' };
     case 'cpp':
     case 'c++':
-      return 54; // C++ (GCC 9.2.0)
+      return { language: 'cpp', version: '*' };
     case 'c':
-      return 50; // C (GCC 9.2.0)
+      return { language: 'c', version: '*' };
+    case 'c#':
+    case 'csharp':
+    case 'cs':
+      return { language: 'csharp', version: '*' };
+    case 'go':
+      return { language: 'go', version: '*' };
+    case 'kotlin':
+      return { language: 'kotlin', version: '*' };
     default:
       throw new Error(`Unsupported language: ${language}`);
   }
