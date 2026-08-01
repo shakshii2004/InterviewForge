@@ -130,8 +130,8 @@ export const executionService = {
           error
         });
         
-        // Wait 1 second between requests to avoid rate limits
-        await new Promise(r => setTimeout(r, 1000));
+        // To prevent rate limiting (JDoodle allows ~5 req/sec, wait 2000ms between calls)
+        await new Promise(resolve => setTimeout(resolve, 2000));
       } catch (err: any) {
         results.push({
           status: 'Internal Error',
