@@ -7,7 +7,7 @@ dotenv.config();
 
 const seed = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/interviewforge');
+    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/interviewforge');
     
     // Clear old questions
     await CodingQuestion.deleteMany({});
@@ -33,13 +33,13 @@ const seed = async () => {
         returnType: 'int[]'
       },
       sampleTestCases: [
-        { input: '2 7 11 15\n9', expectedOutput: '0 1' },
-        { input: '3 2 4\n6', expectedOutput: '1 2' }
+        { input: '4\n2 7 11 15\n9', expectedOutput: '0 1' },
+        { input: '3\n3 2 4\n6', expectedOutput: '1 2' }
       ],
       hiddenTestCases: [
-        { input: '3 3\n6', expectedOutput: '0 1' },
-        { input: '2 5 5 11\n10', expectedOutput: '1 2' },
-        { input: '-1 -2 -3 -4 -5\n-8', expectedOutput: '2 4' }
+        { input: '2\n3 3\n6', expectedOutput: '0 1' },
+        { input: '4\n2 5 5 11\n10', expectedOutput: '1 2' },
+        { input: '5\n-1 -2 -3 -4 -5\n-8', expectedOutput: '2 4' }
       ],
       timeLimit: 2,
       memoryLimit: 128000
