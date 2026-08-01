@@ -78,10 +78,6 @@ export const CodingDashboard = () => {
         
         <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4">
-              <Code2 className="w-4 h-4" />
-              <span>Phase 3.1 Coding Setup</span>
-            </div>
             <h1 className="text-3xl md:text-4xl font-black text-slate-800 mb-4 tracking-tight">
               Technical Coding Interviews
             </h1>
