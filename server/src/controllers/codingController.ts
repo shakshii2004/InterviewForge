@@ -9,9 +9,32 @@ export const createCodingSession = async (req: Request, res: Response): Promise<
       return;
     }
 
-    const { language, difficulty, topics, numberOfQuestions, duration } = req.body;
+    const { language, difficulty, topics, numberOfQuestions, duration, questionId } = req.body;
 
-    // Validation
+    if (questionId) {
+      // Direct question practice mode
+      const { CodingQuestion } = await import('../models/CodingQuestion');
+      const question = await CodingQuestion.findById(questionId);
+      if (!question) {
+        res.status(404).json({ message: 'Question not found' });
+        return;
+      }
+      
+      const session = await codingService.createSession(userId, {
+        language: language || 'JavaScript',
+        difficulty: question.difficulty,
+        topics: question.topics || ['Practice'],
+        numberOfQuestions: 1,
+        duration: question.estimatedTime || 45,
+        currentQuestion: question._id,
+        status: 'active',
+        startedAt: new Date()
+      });
+      res.status(201).json({ sessionId: session._id });
+      return;
+    }
+
+    // Validation for random session mode
     if (!language || !['Java', 'C++', 'Python', 'JavaScript'].includes(language)) {
       res.status(400).json({ message: 'Invalid or missing language' });
       return;
@@ -24,21 +47,27 @@ export const createCodingSession = async (req: Request, res: Response): Promise<
       res.status(400).json({ message: 'Topics must be a non-empty array' });
       return;
     }
-    if (!numberOfQuestions || ![1, 2, 3, 5].includes(numberOfQuestions)) {
-      res.status(400).json({ message: 'Invalid number of questions' });
-      return;
-    }
-    if (!duration || ![15, 30, 45, 60, 90].includes(duration)) {
-      res.status(400).json({ message: 'Invalid duration' });
-      return;
-    }
+    
+    // Find a random question matching the criteria
+    const { CodingQuestion } = await import('../models/CodingQuestion');
+    const questions = await CodingQuestion.find({
+      difficulty,
+      topics: { $in: topics }
+    });
+    
+    // Fallback if no question matches exact criteria
+    const pool = questions.length > 0 ? questions : await CodingQuestion.find();
+    const randomQuestion = pool[Math.floor(Math.random() * pool.length)];
 
     const session = await codingService.createSession(userId, {
       language,
       difficulty,
       topics,
-      numberOfQuestions,
-      duration
+      numberOfQuestions: numberOfQuestions || 1,
+      duration: duration || 45,
+      currentQuestion: randomQuestion?._id,
+      status: 'active',
+      startedAt: new Date()
     });
 
     res.status(201).json(session);
