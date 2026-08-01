@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
 import { CodingQuestion } from '../models/CodingQuestion';
+import { generateAiEditorial } from '../services/coding/aiService';
 
 export const importFromLeetCode = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -118,6 +119,30 @@ export const importFromLeetCode = async (req: Request, res: Response): Promise<v
     );
 
     res.status(201).json({ message: 'Imported successfully', question: saved });
+
+    // Background process to generate AI Editorial if not present
+    if (saved && !saved.aiEditorial?.approach) {
+      setTimeout(async () => {
+        try {
+          const editorial = await generateAiEditorial(saved.title, saved.description, saved.hints);
+          if (editorial) {
+            await CodingQuestion.findByIdAndUpdate(saved._id, {
+              aiEditorial: {
+                approach: editorial.approach,
+                bruteForce: editorial.bruteForce,
+                optimal: editorial.optimal,
+                interviewTips: editorial.interviewTips
+              },
+              timeComplexity: editorial.timeComplexity,
+              spaceComplexity: editorial.spaceComplexity
+            });
+            console.log(`[AI Editorial] Generated for ${saved.title}`);
+          }
+        } catch (e) {
+          console.error(`[AI Editorial Error] Failed for ${saved.title}`, e);
+        }
+      }, 0);
+    }
 
   } catch (error: any) {
     console.error('LeetCode Import Error:', error);

@@ -192,7 +192,7 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
       
       <div className="flex-1 overflow-hidden">
         <ResizableLayout 
-          leftPanel={<ProblemPanel submissions={submissions} />}
+          leftPanel={<ProblemPanel question={session.currentQuestion} submissions={submissions} />}
           topRightPanel={
             <EditorPanel 
               language={language}
