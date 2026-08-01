@@ -26,10 +26,10 @@ const DIFFICULTIES = [
 ];
 
 const TOPICS = [
-  'Arrays', 'Strings', 'Linked Lists', 'Stacks', 'Queues', 'HashMaps', 
-  'Trees', 'Binary Trees', 'BST', 'Graphs', 'Greedy', 'Dynamic Programming', 
+  'Array', 'String', 'Linked List', 'Stack', 'Queue', 'Hash Table', 
+  'Tree', 'Binary Tree', 'Binary Search Tree', 'Graph Theory', 'Greedy', 'Dynamic Programming', 
   'Backtracking', 'Recursion', 'Binary Search', 'Sliding Window', 
-  'Two Pointers', 'Heap', 'Trie', 'Bit Manipulation', 'Math'
+  'Two Pointers', 'Heap (Priority Queue)', 'Trie', 'Bit Manipulation', 'Math'
 ];
 
 export const CodingSetupWizard = () => {
