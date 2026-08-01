@@ -19,7 +19,12 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
     if (initialSession.code && initialSession.code.trim() !== '') {
       return initialSession.code;
     }
-    return STARTER_CODE[initialSession.language] || STARTER_CODE['JavaScript'];
+    const question = initialSession.currentQuestion;
+    const lang = initialSession.language || 'JavaScript';
+    if (question && question.starterCode && question.starterCode[lang]) {
+      return question.starterCode[lang];
+    }
+    return STARTER_CODE[lang] || STARTER_CODE['JavaScript'];
   });
   
   const [isSaving, setIsSaving] = useState(false);
@@ -74,12 +79,20 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [isSaving, lastSavedAt]);
 
+  const getStarterCode = (lang: string) => {
+    const question = session.currentQuestion;
+    if (question && question.starterCode && question.starterCode[lang]) {
+      return question.starterCode[lang];
+    }
+    return STARTER_CODE[lang] || '';
+  };
+
   const handleLanguageChange = async (newLang: string) => {
     if (newLang === language) return;
     
     if (window.confirm(`Are you sure you want to switch to ${newLang}? This will overwrite your current code with the ${newLang} starter template.`)) {
       setLanguage(newLang);
-      const newCode = STARTER_CODE[newLang] || '';
+      const newCode = getStarterCode(newLang);
       setCode(newCode);
       
       // Immediate save
@@ -89,7 +102,7 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
 
   const handleResetCode = () => {
     if (window.confirm('Reset code to starter template? Your current code will be lost.')) {
-      setCode(STARTER_CODE[language] || '');
+      setCode(getStarterCode(language));
     }
   };
 

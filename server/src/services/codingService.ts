@@ -11,7 +11,7 @@ export const codingService = {
   },
 
   async getSessionById(sessionId: string, userId: string) {
-    const session = await CodingSession.findOne({ _id: sessionId, userId });
+    const session = await CodingSession.findOne({ _id: sessionId, userId }).populate('currentQuestion');
     return session;
   },
 

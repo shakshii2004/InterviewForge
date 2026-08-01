@@ -3,10 +3,10 @@ import Editor, { useMonaco } from '@monaco-editor/react';
 import { Settings, Maximize2, RotateCcw, Copy, Check } from 'lucide-react';
 
 export const STARTER_CODE: Record<string, string> = {
-  'Java': 'class Solution {\n    public static void main(String[] args){\n        \n    }\n}',
-  'Python': 'def solve():\n    pass',
-  'JavaScript': 'function solve(){\n    \n}',
-  'C++': '#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    return 0;\n}'
+  'Java': 'class Solution {\n    public int[] twoSum(int[] nums, int target) {\n        \n    }\n}',
+  'Python': 'class Solution:\n    def twoSum(self, nums, target):\n        pass',
+  'JavaScript': 'class Solution {\n    twoSum(nums, target) {\n        \n    }\n}',
+  'C++': 'class Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) {\n        \n    }\n};'
 };
 
 const MONACO_LANGUAGES: Record<string, string> = {
