@@ -30,6 +30,7 @@ import { CompareAttemptsPage } from './pages/coding/history/CompareAttemptsPage'
 import { PracticeHub } from './pages/coding/practice/PracticeHub';
 import { AssessmentHub } from './pages/coding/assessments/AssessmentHub';
 import { AssessmentWorkspace } from './pages/coding/assessments/AssessmentWorkspace';
+import { CodingAdmin } from './pages/admin/CodingAdmin';
 
 // Phase 3.7: Live Interviews
 import { LiveSetup } from './pages/interviews/live/LiveSetup';
@@ -80,6 +81,7 @@ function App() {
               <Route path="/dashboard/coding/history/compare/:questionId" element={<CompareAttemptsPage />} />
               <Route path="/dashboard/coding/practice" element={<PracticeHub />} />
               <Route path="/dashboard/coding/assessments" element={<AssessmentHub />} />
+              <Route path="/dashboard/admin/coding" element={<CodingAdmin />} />
             </Route>
 
             {/* Full screen sessions */}

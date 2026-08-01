@@ -13,6 +13,7 @@ import interviewRoutes from './routes/interviewRoutes';
 import evaluationRoutes from './routes/evaluationRoutes';
 import analyticsRoutes from './routes/analyticsRoutes';
 import codingRoutes from './routes/codingRoutes';
+import adminCodingRoutes from './routes/adminCodingRoutes';
 
 dotenv.config();
 
@@ -61,6 +62,7 @@ app.use('/api/interviews', interviewRoutes);
 app.use('/api/evaluation', evaluationRoutes);
 app.use('/api/reports', analyticsRoutes);
 app.use('/api/coding', codingRoutes);
+app.use('/api/admin/coding', adminCodingRoutes);
 
 // Health check route
 app.get('/api/health', (req: express.Request, res: express.Response) => {
