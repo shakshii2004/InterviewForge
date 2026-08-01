@@ -72,12 +72,17 @@ export const executionService = {
     // Execute sequentially to respect standard rate limits
     for (const tc of testCases) {
       try {
-        const response = await jdoodleClient.execute({
+        // Unescape newlines if they were stored as literal string "\n" in DB
+        const formattedInput = tc.input.replace(/\\n/g, '\n');
+
+        const requestPayload = {
           script: code,
           language: jdoodleLang.language,
           versionIndex: jdoodleLang.versionIndex,
-          stdin: tc.input
-        });
+          stdin: formattedInput
+        };
+
+        const response = await jdoodleClient.execute(requestPayload);
 
         const output = (response.output || '').trim();
         const expected = (tc.expectedOutput || '').trim();
@@ -102,6 +107,14 @@ export const executionService = {
            status = 'Time Limit Exceeded';
            passed = false;
         }
+
+        console.log(`\n--- JDoodle Execution ---`);
+        console.log(`Language: ${requestPayload.language}`);
+        console.log(`Stdin:\n${requestPayload.stdin}`);
+        console.log(`ExpectedOutput:\n${expected}`);
+        console.log(`Stdout:\n${output}`);
+        console.log(`Stderr:\n${error || 'None'}`);
+        console.log(`-------------------------\n`);
 
         results.push({
           status,
