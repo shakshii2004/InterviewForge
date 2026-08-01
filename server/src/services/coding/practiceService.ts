@@ -5,8 +5,8 @@ import { Bookmark } from '../../models/Bookmark';
 export const practiceService = {
   async getQuestions(filters: any = {}) {
     const query: any = {};
-    if (filters.difficulty) query.difficulty = filters.difficulty;
-    if (filters.topic) query.topics = filters.topic;
+    if (filters.difficulty && filters.difficulty !== 'All') query.difficulty = filters.difficulty;
+    if (filters.topic && filters.topic !== 'All') query.topics = filters.topic;
     if (filters.company) query.companies = filters.company;
     
     // We can also support search by title
@@ -14,10 +14,25 @@ export const practiceService = {
       query.title = { $regex: filters.search, $options: 'i' };
     }
 
-    return await CodingQuestion.find(query)
+    const page = parseInt(filters.page) || 1;
+    const limit = parseInt(filters.limit) || 20;
+    const skip = (page - 1) * limit;
+
+    const totalQuestions = await CodingQuestion.countDocuments(query);
+    
+    const questions = await CodingQuestion.find(query)
       .select('-hiddenTestCases -starterCode') // Don't send heavy/hidden fields for list view
       .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
       .lean();
+
+    return {
+      questions,
+      totalQuestions,
+      totalPages: Math.ceil(totalQuestions / limit),
+      currentPage: page
+    };
   },
 
   async getBookmarks(userId: string) {

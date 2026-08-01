@@ -89,13 +89,22 @@ export const CodingDashboard = () => {
               Tackle algorithmic problems in a browser IDE with AI paired programming hints. Customize your language, topics, and difficulty.
             </p>
             
-            <button 
-              onClick={() => navigate('/dashboard/coding/setup')}
-              className="px-8 py-4 bg-primary text-background rounded-2xl font-bold flex items-center gap-3 hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25 hover:-translate-y-1 group"
-            >
-              Start Coding Interview
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => navigate('/dashboard/coding/setup')}
+                className="px-8 py-4 bg-primary text-background rounded-2xl font-bold flex items-center gap-3 hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25 hover:-translate-y-1 group"
+              >
+                Start Coding Interview
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+              
+              <button 
+                onClick={() => navigate('/dashboard/coding/practice')}
+                className="px-8 py-4 bg-slate-800/10 text-slate-700 border border-slate-200 rounded-2xl font-bold flex items-center gap-3 hover:bg-slate-800/20 transition-all hover:-translate-y-1"
+              >
+                Browse Problemset
+              </button>
+            </div>
           </div>
           
           <div className="hidden md:flex flex-col gap-4">
