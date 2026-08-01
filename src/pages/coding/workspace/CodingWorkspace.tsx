@@ -14,17 +14,27 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
   const session = initialSession;
   const [language, setLanguage] = useState(initialSession.language || 'JavaScript');
   
+  const defaultQuestionId = session.questions?.[0]?._id || session.currentQuestion?._id || session.currentQuestion;
+  const [activeQuestionId, setActiveQuestionId] = useState<string>(defaultQuestionId);
+  const activeQuestion = (session.questions || []).find((q: any) => q._id === activeQuestionId) || session.currentQuestion;
+  
+  const getStarterCode = (lang: string, q?: any) => {
+    const targetQ = q || activeQuestion;
+    if (targetQ && targetQ.starterCode && targetQ.starterCode[lang]) {
+      return targetQ.starterCode[lang];
+    }
+    return STARTER_CODE[lang] || '';
+  };
+
   // Initialize code to DB code if exists, otherwise starter code
   const [code, setCode] = useState(() => {
+    if (session.codes && session.codes[activeQuestionId]) {
+      return session.codes[activeQuestionId];
+    }
     if (initialSession.code && initialSession.code.trim() !== '') {
       return initialSession.code;
     }
-    const question = initialSession.currentQuestion;
-    const lang = initialSession.language || 'JavaScript';
-    if (question && question.starterCode && question.starterCode[lang]) {
-      return question.starterCode[lang];
-    }
-    return STARTER_CODE[lang] || STARTER_CODE['JavaScript'];
+    return getStarterCode(initialSession.language || 'JavaScript', activeQuestion);
   });
   
   const [isSaving, setIsSaving] = useState(false);
@@ -36,12 +46,15 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Sync state with DB
-  const saveSession = async (currentCode: string, currentLang: string) => {
+  const saveSession = async (currentCode: string, currentLang: string, questionId: string) => {
     setIsSaving(true);
     try {
       await api.patch(`/coding/session/${session._id}`, {
         code: currentCode,
-        language: currentLang
+        language: currentLang,
+        codes: {
+          [questionId]: currentCode
+        }
       });
       setLastSavedAt(new Date());
     } catch (error) {
@@ -56,7 +69,7 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
     if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
     
     saveTimeoutRef.current = setTimeout(() => {
-      saveSession(code, language);
+      saveSession(code, language, activeQuestionId);
     }, 10000); // Save every 10 seconds of idle typing
 
     return () => {
@@ -79,12 +92,21 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [isSaving, lastSavedAt]);
 
-  const getStarterCode = (lang: string) => {
-    const question = session.currentQuestion;
-    if (question && question.starterCode && question.starterCode[lang]) {
-      return question.starterCode[lang];
+  const handleQuestionChange = async (newQuestionId: string) => {
+    if (newQuestionId === activeQuestionId) return;
+    
+    // Save current code immediately before switching
+    await saveSession(code, language, activeQuestionId);
+    
+    setActiveQuestionId(newQuestionId);
+    
+    // Load new code
+    if (session.codes && session.codes[newQuestionId]) {
+      setCode(session.codes[newQuestionId]);
+    } else {
+      const newQuestion = (session.questions || []).find((q: any) => q._id === newQuestionId);
+      setCode(getStarterCode(language, newQuestion) || STARTER_CODE[language] || '');
     }
-    return STARTER_CODE[lang] || '';
   };
 
   const handleLanguageChange = async (newLang: string) => {
@@ -96,7 +118,7 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
       setCode(newCode);
       
       // Immediate save
-      await saveSession(newCode, newLang);
+      await saveSession(newCode, newLang, activeQuestionId);
     }
   };
 
@@ -129,7 +151,7 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
     setResults([]);
     try {
       // Ensure we have the question ID (for now hardcode to the seeded dummy question if not present)
-      const questionId = session.currentQuestion || 'dummy_question_id';
+      const questionId = activeQuestionId || 'dummy_question_id';
       
       const { data } = await api.post('/coding/run', {
         code,
@@ -149,7 +171,7 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
     setIsSubmitting(true);
     setResults([]);
     try {
-      const questionId = session.currentQuestion || 'dummy_question_id';
+      const questionId = activeQuestionId || 'dummy_question_id';
       
       const { data } = await api.post('/coding/submit', {
         code,
@@ -180,6 +202,8 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
     <div className="h-screen w-full flex flex-col bg-slate-100 overflow-hidden font-sans">
       <SessionHeader 
         session={session}
+        activeQuestionId={activeQuestionId}
+        onQuestionChange={handleQuestionChange}
         language={language}
         onLanguageChange={handleLanguageChange}
         isSaving={isSaving}
@@ -192,7 +216,7 @@ export const CodingWorkspace = ({ initialSession }: CodingWorkspaceProps) => {
       
       <div className="flex-1 overflow-hidden">
         <ResizableLayout 
-          leftPanel={<ProblemPanel question={session.currentQuestion} submissions={submissions} />}
+          leftPanel={<ProblemPanel question={activeQuestion} submissions={submissions.filter(s => s.questionId === activeQuestionId || !s.questionId)} />}
           topRightPanel={
             <EditorPanel 
               language={language}

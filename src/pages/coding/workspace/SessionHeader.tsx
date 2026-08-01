@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 
 interface SessionHeaderProps {
   session: any;
+  activeQuestionId: string;
+  onQuestionChange: (id: string) => void;
   language: string;
   onLanguageChange: (lang: string) => void;
   isSaving: boolean;
@@ -42,9 +44,10 @@ const CountdownTimer = ({ startTime, durationMinutes }: { startTime: string, dur
   return <span className="text-sm font-mono font-medium text-slate-700">{timeLeft || '...'}</span>;
 };
 
-export const SessionHeader = ({ session, language, onLanguageChange, isSaving, lastSavedAt, onRun, onSubmit, isRunning, isSubmitting }: SessionHeaderProps) => {
+export const SessionHeader = ({ session, activeQuestionId, onQuestionChange, language, onLanguageChange, isSaving, lastSavedAt, onRun, onSubmit, isRunning, isSubmitting }: SessionHeaderProps) => {
   const navigate = useNavigate();
   const languages = ['Java', 'C++', 'Python', 'JavaScript'];
+  const questions = session.questions || (session.currentQuestion ? [session.currentQuestion] : []);
 
   return (
     <div className="h-14 border-b border-slate-200 bg-card flex items-center justify-between px-4 sticky top-0 z-20">
@@ -60,8 +63,26 @@ export const SessionHeader = ({ session, language, onLanguageChange, isSaving, l
           <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold">
             IF
           </div>
-          <span className="font-bold text-slate-800">Coding Workspace</span>
+          <span className="font-bold text-slate-800 hidden md:block">Workspace</span>
         </div>
+        
+        {questions.length > 1 && (
+          <div className="flex items-center bg-slate-100 rounded-lg p-1">
+            {questions.map((q: any, i: number) => (
+              <button
+                key={q._id}
+                onClick={() => onQuestionChange(q._id)}
+                className={`px-3 py-1 text-sm font-bold rounded-md transition-all ${
+                  activeQuestionId === q._id 
+                    ? 'bg-white text-primary shadow-sm' 
+                    : 'text-slate-500 hover:text-slate-700'
+                }`}
+              >
+                Q{i + 1}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="flex items-center gap-6">

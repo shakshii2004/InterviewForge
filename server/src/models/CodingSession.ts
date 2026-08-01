@@ -10,6 +10,8 @@ export interface ICodingSession extends Document {
   status: 'pending' | 'active' | 'completed' | 'abandoned';
   code: string;
   currentQuestion?: mongoose.Types.ObjectId;
+  questions?: mongoose.Types.ObjectId[];
+  codes?: Map<string, string>;
   progress: number;
   lastSavedAt?: Date;
   startedAt?: Date;
@@ -60,6 +62,15 @@ const codingSessionSchema = new Schema<ICodingSession>({
   currentQuestion: {
     type: Schema.Types.ObjectId,
     ref: 'CodingQuestion'
+  },
+  questions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'CodingQuestion'
+  }],
+  codes: {
+    type: Map,
+    of: String,
+    default: {}
   },
   progress: {
     type: Number,

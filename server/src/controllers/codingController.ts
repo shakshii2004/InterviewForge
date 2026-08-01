@@ -61,15 +61,19 @@ export const createCodingSession = async (req: Request, res: Response): Promise<
       return;
     }
     
-    const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+    // Shuffle questions and select the requested number
+    const shuffled = questions.sort(() => 0.5 - Math.random());
+    const selectedQuestions = shuffled.slice(0, Math.min(numberOfQuestions || 1, shuffled.length));
+    const selectedIds = selectedQuestions.map(q => q._id);
 
     const session = await codingService.createSession(userId, {
       language,
       difficulty,
       topics,
-      numberOfQuestions: numberOfQuestions || 1,
+      numberOfQuestions: selectedQuestions.length,
       duration: duration || 45,
-      currentQuestion: randomQuestion?._id,
+      currentQuestion: selectedIds[0],
+      questions: selectedIds,
       status: 'active',
       startedAt: new Date()
     });
@@ -122,7 +126,16 @@ export const updateCodingSession = async (req: Request, res: Response): Promise<
     // Always update lastSavedAt when patching
     updates.lastSavedAt = new Date();
 
-    const session = await codingService.updateSession(req.params.id as string, userId, updates);
+    // Handle nested map updates for codes
+    const finalUpdates: any = { ...updates };
+    if (updates.codes) {
+      delete finalUpdates.codes;
+      for (const [qId, code] of Object.entries(updates.codes)) {
+        finalUpdates[`codes.${qId}`] = code;
+      }
+    }
+
+    const session = await codingService.updateSession(req.params.id as string, userId, finalUpdates);
     if (!session) {
       res.status(404).json({ message: 'Coding session not found' });
       return;
