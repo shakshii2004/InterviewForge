@@ -26,7 +26,7 @@ const DIFFICULTIES = [
 ];
 
 const TOPICS = [
-  'Array', 'String', 'Linked List', 'Stack', 'Queue', 'Hash Table', 
+  'Striver A2Z', 'Array', 'String', 'Linked List', 'Stack', 'Queue', 'Hash Table', 
   'Tree', 'Binary Tree', 'Binary Search Tree', 'Graph Theory', 'Greedy', 'Dynamic Programming', 
   'Backtracking', 'Recursion', 'Binary Search', 'Sliding Window', 
   'Two Pointers', 'Heap (Priority Queue)', 'Trie', 'Bit Manipulation', 'Math'
