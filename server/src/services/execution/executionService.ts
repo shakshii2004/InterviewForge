@@ -3,6 +3,7 @@ import { CodingQuestion, TestCase } from '../../models/CodingQuestion';
 import mongoose from 'mongoose';
 import { ParsedExecutionResult } from './resultParser';
 import { jdoodleClient, getJDoodleLanguage } from './jdoodleClient';
+import { wrapCode } from './codeWrapper';
 
 export const executionService = {
   async runSampleTests(code: string, language: string, questionId: string): Promise<ParsedExecutionResult[]> {
@@ -12,7 +13,8 @@ export const executionService = {
     const testCases = question.sampleTestCases;
     if (!testCases || testCases.length === 0) return [];
 
-    return this.executeTestCases(code, language, testCases);
+    const wrappedCode = wrapCode(code, language, question.signature);
+    return this.executeTestCases(wrappedCode, language, testCases);
   },
 
   async submitHiddenTests(
@@ -26,7 +28,9 @@ export const executionService = {
     if (!question) throw new Error('Question not found');
     
     const testCases = question.hiddenTestCases;
-    const results = await this.executeTestCases(code, language, testCases);
+    
+    const wrappedCode = wrapCode(code, language, question.signature);
+    const results = await this.executeTestCases(wrappedCode, language, testCases);
 
     let passedTestCases = 0;
     let maxExecutionTime = 0;
