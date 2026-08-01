@@ -56,8 +56,12 @@ export const createCodingSession = async (req: Request, res: Response): Promise<
     });
     
     // Fallback if no question matches exact criteria
-    const pool = questions.length > 0 ? questions : await CodingQuestion.find();
-    const randomQuestion = pool[Math.floor(Math.random() * pool.length)];
+    if (questions.length === 0) {
+      res.status(404).json({ message: `No problems found matching topic '${topics.join(', ')}' and difficulty '${difficulty}'. Try 'Easy' difficulty instead!` });
+      return;
+    }
+    
+    const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
 
     const session = await codingService.createSession(userId, {
       language,
