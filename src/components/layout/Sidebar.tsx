@@ -1,18 +1,23 @@
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, Video, User, Settings as SettingsIcon, FileText, BarChart2, Code2, Database } from 'lucide-react';
 import { cn } from '../../utils/cn';
+import { useAuth } from '../../context/AuthContext';
 
 export const Sidebar = () => {
+  const { user } = useAuth();
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, soon: false },
     { name: 'Resume', path: '/dashboard/resume', icon: FileText, soon: false },
     { name: 'Mock Interviews', path: '/dashboard/interviews', icon: Video, soon: false },
     { name: 'Coding Interviews', path: '/dashboard/coding', icon: Code2, soon: false },
     { name: 'Reports', path: '/reports', icon: BarChart2, soon: false },
-    { name: 'Admin Importer', path: '/dashboard/admin/coding', icon: Database, soon: false },
     { name: 'Profile', path: '/dashboard/profile', icon: User },
     { name: 'Settings', path: '/dashboard/settings', icon: SettingsIcon },
   ];
+
+  if (user?.role === 'admin') {
+    navItems.splice(5, 0, { name: 'Admin Importer', path: '/dashboard/admin/coding', icon: Database, soon: false });
+  }
 
   return (
     <aside className="w-64 border-r border-border bg-card/50 backdrop-blur-xl hidden lg:flex flex-col h-full sticky top-0">

@@ -9,6 +9,7 @@ interface User {
   _id: string;
   name: string;
   email: string;
+  role?: string;
   bio?: string;
   skills?: string[];
   targetRole?: string;
